@@ -1,41 +1,85 @@
-image: openjdk:8-jdk
-
-variables:
-  ANDROID_COMPILE_SDK: "29"
-  ANDROID_BUILD_TOOLS: "29.0.3"
-  ANDROID_SDK_TOOLS: "6514223"
+image: androidsdk/android-30
 before_script:
-  - apt-get --quiet update --yes
-  - apt-get --quiet install --yes wget tar unzip lib32stdc++6 lib32z1
-  - export ANDROID_HOME="${PWD}/android-home"
-  - install -d $ANDROID_HOME
-  - wget --output-document=$ANDROID_HOME/cmdline-tools.zip https://dl.google.com/android/repository/commandlinetools-linux-${ANDROID_SDK_TOOLS}_latest.zip
-  - pushd $ANDROID_HOME
-  - unzip -d cmdline-tools cmdline-tools.zip
-  - popd
-  - export PATH=$PATH:${ANDROID_HOME}/cmdline-tools/tools/bin/
-  - sdkmanager --version
-  - yes | sdkmanager --sdk_root=${ANDROID_HOME} --licenses || true
-  - sdkmanager --sdk_root=${ANDROID_HOME} "platforms;android-${ANDROID_COMPILE_SDK}"
-  - sdkmanager --sdk_root=${ANDROID_HOME} "platform-tools"
-  - sdkmanager --sdk_root=${ANDROID_HOME} "build-tools;${ANDROID_BUILD_TOOLS}"
-  - chmod +x ./gradlew
-lintDebug:
-  interruptible: true
-  stage: build
+  - export GRADLE_USER_HOME=`pwd`/.gradle
+cache:
+  key: gradlew
+  paths:
+    - ~./gradle/caches
+    - ~./gradle/wrapper
+
+stages:
+  - lint
+  - test
+  - build
+  - firebase
+  - internal
+  - alpha
+lint:
+  stage: test
+  environment: test1
   script:
-    - ./gradlew -Pci --console=plain :app:lintDebug -PbuildDir=lint
-assembleDebug:
-  interruptible: true
-  stage: build
+    - ./gradlew lint
+
+test:
+  stage: test
+  environment: test2
   script:
-    - ./gradlew assembleDebug
+    - ./gradlew test
+#
+#klint:
+#  script:
+#    -echo "Klint"
+#detekt:
+#  script:
+#    -echo "detek"
+#
+#checkstyle:
+#  script:
+#    -echo "checkstyle"
+#
+#sonarqube:
+#  script:
+#    -echo "sonar"
+#
+#unitTest:
+#  script:
+#    -echo "unitTest"
+#
+#IntrumentalTest:
+#  script:
+#    -echo "IntrumentalTest"
+
+Build:
+  stage: build
+  environment: apk
+  when: manual
+  script:
+    - ./gradlew assembleRelease
   artifacts:
     paths:
-      - app/build/outputs/
+      - app/build/outputs/apk/**
 
-debugTests:
-  interruptible: true
-  stage: test
-  script:
-    - ./gradlew -Pci --console=plain :app:testDebug
+
+#apk:
+#  script:
+#    -echo "IntrumentalTest"
+#
+#
+#firebase:
+#  script:
+#    -echo "IntrumentalTest"
+#
+#
+#appcenter:
+#  script:
+#    -echo "IntrumentalTest"
+#
+#
+#internal:
+#  script:
+#    -echo "IntrumentalTest"
+#
+#
+#alpha:
+#  script:
+#    -echo "IntrumentalTest"
