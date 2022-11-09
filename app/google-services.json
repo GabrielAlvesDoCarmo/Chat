@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1089203898727",
+    "project_id": "chat-597aa",
+    "storage_bucket": "chat-597aa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1089203898727:android:3cdf71036c7d5e3f4c07c2",
+        "android_client_info": {
+          "package_name": "com.gdsdevtec.chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1089203898727-84fq7jaa71hfo242nas1etb9vlagd4n3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAcZ1tSIae3jcs2n3b6qXbmUoVJa_p9-QY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1089203898727-84fq7jaa71hfo242nas1etb9vlagd4n3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
