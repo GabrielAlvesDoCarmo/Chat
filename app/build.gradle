@@ -3,7 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'com.github.triplet.play'
 }
-def keystorePropertiesFile = rootProject.file("app/chat_keystore.jks")
+def keystorePropertiesFile = rootProject.file("app/keystore.properties")
 def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 apply from: ("${getRootProject().rootDir}/versions.gradle")
@@ -17,7 +17,7 @@ android {
         release {
             keyAlias keystoreProperties['keyAlias']
             keyPassword keystoreProperties['keyPassword']
-            storeFile keystoreProperties['storeFile']
+            storeFile file(keystoreProperties['storeFile'])
             storePassword keystoreProperties['storePassword']
         }
     }
@@ -30,7 +30,6 @@ android {
         targetSdk Integer.valueOf("$rootProject.ext.targetSdk")
         versionCode Integer.valueOf("$rootProject.ext.versionCode")
         versionName "$rootProject.ext.versionName"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
