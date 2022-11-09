@@ -1,12 +1,18 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'com.github.triplet.play'
 }
 def keystorePropertiesFile = rootProject.file("app/chat_keystore.jks")
 def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 apply from: ("${getRootProject().rootDir}/versions.gradle")
 android {
+    bundle {
+        storeArchive {
+            enable = false
+        }
+    }
     signingConfigs {
         release {
             keyAlias keystoreProperties['keyAlias']
@@ -43,7 +49,9 @@ android {
         jvmTarget = "$rootProject.ext.jvmTarget"
     }
 }
-
+play {
+    serviceAccountCredentials.set(file("service_account_play_console.json"))
+}
 dependencies {
 
     implementation "androidx.core:core-ktx:$rootProject.ext.core_ktx"
