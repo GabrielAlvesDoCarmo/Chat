@@ -5,7 +5,7 @@ plugins {
 def keystorePropertiesFile = rootProject.file("app/chat_keystore.jks")
 def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-
+apply from: ("${getRootProject().rootDir}/versions.gradle")
 android {
     signingConfigs {
         release {
@@ -16,14 +16,14 @@ android {
         }
     }
     namespace 'com.gdsdevtec.chat'
-    compileSdk 32
+    compileSdk Integer.valueOf("$rootProject.ext.compileSdk")
 
     defaultConfig {
         applicationId "com.gdsdevtec.chat"
-        minSdk 27
-        targetSdk 32
-        versionCode 1
-        versionName "1.0"
+        minSdk Integer.valueOf("$rootProject.ext.minSdk")
+        targetSdk Integer.valueOf("$rootProject.ext.targetSdk")
+        versionCode Integer.valueOf("$rootProject.ext.versionCode")
+        versionName "$rootProject.ext.versionName"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -40,17 +40,17 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = "$rootProject.ext.jvmTarget"
     }
 }
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.5.1'
-    implementation 'com.google.android.material:material:1.7.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    implementation "androidx.core:core-ktx:$rootProject.ext.core_ktx"
+    implementation "androidx.appcompat:appcompat:$rootProject.ext.appcompat"
+    implementation "com.google.android.material:material:$rootProject.ext.material"
+    implementation "androidx.constraintlayout:constraintlayout:$rootProject.ext.constraintlayout"
+    testImplementation "junit:junit:$rootProject.ext.testImplementation_junit"
+    androidTestImplementation "androidx.test.ext:junit:$rootProject.ext.androidTestImplementation_junit"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.ext.androidTestImplementation_espresso_core"
 }
