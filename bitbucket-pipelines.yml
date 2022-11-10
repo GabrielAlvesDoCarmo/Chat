@@ -7,7 +7,6 @@ pipelines:
           name: Configuring Environment
           caches:
             - gradle
-            - gradle-wrapper
           script:
             - echo  $KEYSTORE_PROPERTIES_FILE_APP_CHAT | base64 -d > app/keystore.properties
             - echo  $FIREBASE_CREDENCIAL_FILE_APP_CHAT | base64 -d > app/firebase_service_distribuition.json
