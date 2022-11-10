@@ -4,6 +4,7 @@ plugins {
     id 'com.github.triplet.play'
     id 'com.google.firebase.appdistribution'
     id 'com.google.gms.google-services'
+    id 'org.sonarqube'
 }
 def keystorePropertiesFile = System.getenv("KEYSTORE_PROPERTIES_FILE_APP_CHAT") ?: rootProject.file(kestorePropertiesFile)
 def keystoreProperties = new Properties()
@@ -58,6 +59,17 @@ android {
     }
     kotlinOptions {
         jvmTarget = "$rootProject.ext.jvmTarget"
+    }
+    sonarqube {
+        properties {
+            property "sonar.projectName", "Chat"
+            property "sonar.projectKey", "Chat"
+            property "sonar.host.url", "http://localhost:9000"
+            property "sonar.language", "kotlin"
+            property "sonar.sources", "src/main/"
+            property "sonar.login", "admin"
+            property "sonar.password", "@pollomao2506"
+        }
     }
 }
 play {
