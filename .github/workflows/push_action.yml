@@ -24,6 +24,14 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
+      - shell:
+        env:
+          KEYSTORE: ${{secrets.KEYSTORE_PROPERTIES_FILE_APP_CHAT}}
+          APPID: ${{secrets.APP_CHAT_ID_FIREBASE}}
+          FIREBASE: ${{secrets.FIREBASE_CREDENCIAL_FILE_APP_CHAT}}
+          PLAYCONSOLE: ${{secrets.SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT}}
+        run: |
+          export "$KEYSTORE" , export "APPID", export "FIREBASE", export "PLAYCONSOLE", printenv
       - name: Build with Gradle
         run: ./gradlew build
   test:
