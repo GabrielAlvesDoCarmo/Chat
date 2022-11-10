@@ -2,8 +2,10 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'com.github.triplet.play'
+    id 'com.google.firebase.appdistribution'
+    id 'com.google.gms.google-services'
 }
-def keystorePropertiesFile = rootProject.file("app/keystore.properties")
+def keystorePropertiesFile = System.getenv("KEYSTORE_PROPERTIES_FILE_APP_CHAT") ?: rootProject.file(kestorePropertiesFile)
 def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 apply from: ("${getRootProject().rootDir}/versions.gradle")
@@ -34,10 +36,20 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField "String", "BASE_TESTE", '"TESTE"'
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
+            firebaseAppDistribution {
+                appId = System.getenv("APP_CHAT_ID_FIREBASE") ?: appIdFirebaseAppChat
+                artifactType = "APK"
+                releaseNotesFile = "app/releasenotes.txt"
+                groups = "Testers"
+                serviceCredentialsFile = System.getenv("FIREBASE_CREDENCIAL_FILE_APP_CHAT") ?: firebaseCredentialFileAppChat
+            }
         }
     }
     compileOptions {
@@ -49,7 +61,7 @@ android {
     }
 }
 play {
-    serviceAccountCredentials.set(file("service_account_play_console.json"))
+    serviceAccountCredentials.set(file(System.getenv("SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT")) ?: file(serviceAccountPlayConsoleAppChat))
 }
 dependencies {
 
