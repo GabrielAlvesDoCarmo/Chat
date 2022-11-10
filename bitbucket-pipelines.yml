@@ -1,27 +1,14 @@
 image: androidsdk/android-30
 
 pipelines:
-  default:
-    - parallel:
-        - step:
-            name: Android Debug Application
-            caches:
-              - gradle
-            script:
-              - ./gradlew assembleDebug
-            artifacts:
-              - app/build/outputs/**
-        - step:
-            name: Lint
-            caches:
-              - gradle
-            script:
-              - ./gradlew lint
-            artifacts:
-              - app/build/reports/**        # artifacts are files that are produced by a step https://support.atlassian.com/bitbucket-cloud/docs/use-artifacts-in-steps/
-        - step:           # step to run unit tests
-            name: Unit Tests
-            caches:
-              - gradle    # caching speed up subsequent execution https://support.atlassian.com/bitbucket-cloud/docs/cache-dependencies/
-            script:
-              - ./gradlew testDebugUnitTest # test reporting is automatically enabled https://support.atlassian.com/bitbucket-cloud/docs/test-reporting-in-pipelines/
+  branches:
+    master:
+      - step:
+          name: Build
+          caches:
+            - gradle
+            - gradle/wrapper
+          script:
+            - ./gradlew assembleDebug
+          artifacts:
+            - app/build/outputs/**
