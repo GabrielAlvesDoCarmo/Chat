@@ -18,7 +18,7 @@ jobs:
         env:
           APPID: ${{secrets.APP_CHAT_ID_FIREBASE}}
         run: |
-          export APP_CHAT_ID_FIREBASE=$APPID;
+          export APP_CHAT_ID_FIREBASE="$APPID";
           printenv
       - name: Generate Keystore
         env:
