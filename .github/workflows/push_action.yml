@@ -23,17 +23,8 @@ jobs:
         run: |
           export APP_CHAT_ID_FIREBASE=$APPID;
           echo $KEYSTORE | base64 -d > app/keystore.properties;
-          cd app/;
-          ls -lla;
-          cd ..;
           echo $FIREBASE | base64 -d > app/firebase_service_distribuition.json;
-          cd app;
-          ls -lal;
-          cd ..;
           echo $PLAYCONSOLE | base64 -d > app/service_account_play_console.json;
-          cd app;
-          ls -lal;
-          cd ..;
       - name: set up JDK 11
         uses: actions/setup-java@v3
         with:
