@@ -8,7 +8,7 @@ plugins {
     id 'io.gitlab.arturbosch.detekt'
     id "org.jmailen.kotlinter"
 }
-def keystorePropertiesFile = System.getenv("KEYSTORE_PROPERTIES_FILE_APP_CHAT") ?: rootProject.file(kestorePropertiesFile)
+def keystorePropertiesFile = System.getenv("KEYSTORE_PROPERTIES_FILE_APP_CHAT") ?: rootProject.file("app/keystore.properties")
 def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 apply from: ("${getRootProject().rootDir}/versions.gradle")
@@ -51,7 +51,7 @@ android {
                 artifactType = "APK"
                 releaseNotesFile = "app/releasenotes.txt"
                 groups = "Testers"
-                serviceCredentialsFile = System.getenv("FIREBASE_CREDENCIAL_FILE_APP_CHAT") ?: firebaseCredentialFileAppChat
+                serviceCredentialsFile = System.getenv("FIREBASE_CREDENCIAL_FILE_APP_CHAT") ?: "firebase_service_distribuition.json"
             }
         }
     }
@@ -75,7 +75,7 @@ android {
     }
 }
 play {
-    serviceAccountCredentials.set(file(System.getenv("SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT")) ?: file(serviceAccountPlayConsoleAppChat))
+    serviceAccountCredentials.set(file(System.getenv("SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT")) ?: file("service_account_play_console.json"))
 }
 dependencies {
 
