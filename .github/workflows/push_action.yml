@@ -50,6 +50,15 @@ jobs:
           name: index.html
           path: app/build/reports/lint-results-debug.html
 
+      - name: Ktlint Test
+        run: ./gradlew lintKotlin
+
+      - name: Detekt Test
+        run: ./gradlew detekt
+
+      - name: Sonarqube Test
+        run: ./gradlew sonarqube
+
       - name: Unit Test
         run: ./gradlew testDebugUnitTest
 
