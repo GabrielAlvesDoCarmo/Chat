@@ -1,6 +1,9 @@
 name: Control Repository
 
 on:
+  push:
+    branch:
+      - development
 
 jobs:
   build:
