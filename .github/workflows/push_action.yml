@@ -15,10 +15,8 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Define appID
-        env:
-          APPID: ${{secrets.APP_CHAT_ID_FIREBASE}}
         run: |
-          export APP_CHAT_ID_FIREBASE="$APPID";
+          export APP_CHAT_ID_FIREBASE=${{secrets.APP_CHAT_ID_FIREBASE}}
           printenv
       - name: Generate Keystore
         env:
