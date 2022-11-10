@@ -18,7 +18,8 @@ jobs:
         env:
           APPID: ${{secrets.APP_CHAT_ID_FIREBASE}}
           KEYSTORE: ${{secrets.KEYSTORE_PROPERTIES_FILE_APP_CHAT}}
-          FIREBASE: ${{secrets.KEYSTORE_PROPERTIES_FILE_APP_CHAT}}
+          FIREBASE: ${{secrets.FIREBASE_CREDENCIAL_FILE_APP_CHAT}}
+          PLAYCONSOLE: ${{secrets.SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT}}
         run: |
           export APP_CHAT_ID_FIREBASE=$APPID,
           echo $KEYSTORE | base64 -d > app/keystore.properties,
