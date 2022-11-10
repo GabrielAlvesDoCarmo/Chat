@@ -5,6 +5,8 @@ plugins {
     id 'com.google.firebase.appdistribution'
     id 'com.google.gms.google-services'
     id 'org.sonarqube'
+    id 'io.gitlab.arturbosch.detekt'
+    id "org.jmailen.kotlinter"
 }
 def keystorePropertiesFile = System.getenv("KEYSTORE_PROPERTIES_FILE_APP_CHAT") ?: rootProject.file(kestorePropertiesFile)
 def keystoreProperties = new Properties()
@@ -66,7 +68,7 @@ android {
             property "sonar.projectKey", "Chat"
             property "sonar.host.url", "http://localhost:9000"
             property "sonar.language", "kotlin"
-            property "sonar.sources", "src/main/"
+            property "sonar.sources", "/mnt/sda1/Kotlin/Chat/app/src/main"
             property "sonar.login", "admin"
             property "sonar.password", "@pollomao2506"
         }
