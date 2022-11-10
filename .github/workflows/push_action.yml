@@ -17,11 +17,8 @@ jobs:
       - name: environment variable
         env:
           APPID: ${{secrets.APP_CHAT_ID_FIREBASE}}
-          KEYSTORE: ${{secrets.KEYSTORE_PROPERTIES_FILE_APP_CHAT}}
-          FIREBASE: ${{secrets.FIREBASE_CREDENCIAL_FILE_APP_CHAT}}
-          PLAYCONSOLE: ${{secrets.SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT}}
         run: |
-          echo $KEYSTORE | base64 --decode > app/keystore.properties;
+          echo "$APPID" | export APP_CHAT_ID_FIREBASE=$APPID
       - name: set up JDK 11
         uses: actions/setup-java@v3
         with:
