@@ -1,6 +1,14 @@
 image: androidsdk/android-30
 
 pipelines:
+  custom:
+    testgruop:
+      - step:
+          script:
+            - ./gradlew detekt
+            - ./gradlew lintKotlin
+            - ./gradlew lint
+            - ./gradlew sonarqube
   branches:
     master:
       - step:
@@ -29,7 +37,7 @@ pipelines:
             - base64 -d
           artifacts:
             - app/build/outputs/**
-    release*:
+    release/*:
       - step:
           name: Define Envolvirement
           caches:
@@ -39,7 +47,7 @@ pipelines:
             - base64 -d
           artifacts:
             - app/build/outputs/**
-    feature*:
+    feature/*:
       - step:
           name: Define Envolvirement
           caches:
