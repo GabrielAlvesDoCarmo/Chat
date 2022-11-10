@@ -4,11 +4,59 @@ pipelines:
   branches:
     master:
       - step:
-          name: Build
+          name: Define Envolvirement
+          caches:
+            - gradle
+          script:
+            - echo  $KEYSTORE_PROPERTIES_FILE_APP_CHAT | base64 -d > app/keystore.properties
+            - echo  $FIREBASE_CREDENCIAL_FILE_APP_CHAT | base64 -d > app/firebase_service_distribuition.json
+            - echo  SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT | base64 -d > app/service_account_play_console.json
+            - printenv
+      - step:
+          name: Build App
+          caches:
+            - gradle
+          script:
+            - ./gradlew assembleDebug
+          artifacts:
+            - app/build/outputs/**
+    development:
+      - step:
+          name: Define Envolvirement
           caches:
             - gradle
             - gradle/wrapper
           script:
-            - ./gradlew assembleDebug
+            - base64 -d
+          artifacts:
+            - app/build/outputs/**
+    release*:
+      - step:
+          name: Define Envolvirement
+          caches:
+            - gradle
+            - gradle/wrapper
+          script:
+            - base64 -d
+          artifacts:
+            - app/build/outputs/**
+    feature*:
+      - step:
+          name: Define Envolvirement
+          caches:
+            - gradle
+            - gradle/wrapper
+          script:
+            - base64 -d
+          artifacts:
+            - app/build/outputs/**
+    default:
+      - step:
+          name: Define Envolvirement
+          caches:
+            - gradle
+            - gradle/wrapper
+          script:
+            - base64 -d
           artifacts:
             - app/build/outputs/**
