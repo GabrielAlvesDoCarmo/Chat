@@ -14,7 +14,7 @@ jobs:
       image: androidsdk/android-30
     steps:
       - uses: actions/checkout@v3
-      - name: Define APPID
+      - name: Define appID
         env:
           APPID: ${{secrets.APP_CHAT_ID_FIREBASE}}
         run: |
@@ -22,7 +22,9 @@ jobs:
           printenv
       - name: Generate Keystore
         env:
-          KEYSTORE: ${{secrets.}}
+          KEYSTORE: ${{secrets.KEYSTORE_PROPERTIES_FILE_APP_CHAT}}
+        run: |
+          echo "$KEYSTORE" | base64 -d > app/keystore.properties
       - name: set up JDK 11
         uses: actions/setup-java@v3
         with:
