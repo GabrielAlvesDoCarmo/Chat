@@ -9,11 +9,12 @@ pipelines:
             - gradle
           script:
             - echo $FIREBASE_CREDENCIAL_FILE_APP_CHAT | base64 -decode > app/firebase_service_distribuition.json
-            - echo SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT | base64 -decode > app/service_account_play_console.json
+            - echo $SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT | base64 -decode > app/service_account_play_console.json
       - step:
           name: Build App
           caches:
             - gradle
+            - gradle-wrapper
           script:
             - ./gradlew assembleDebug
           artifacts:
@@ -58,3 +59,8 @@ pipelines:
             - base64 -d
           artifacts:
             - app/build/outputs/**
+
+definitions:
+  caches:
+    gradle-wrapper:
+      ~/.gradle/wrapper/
