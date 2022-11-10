@@ -8,7 +8,7 @@ plugins {
     id 'io.gitlab.arturbosch.detekt'
     id "org.jmailen.kotlinter"
 }
-def keystorePropertiesFile = System.getenv("KEYSTORE_PROPERTIES_FILE_APP_CHAT") ?: rootProject.file("app/keystore.properties")
+def keystorePropertiesFile = rootProject.file("app/keystore.properties")
 def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 apply from: ("${getRootProject().rootDir}/versions.gradle")
@@ -79,6 +79,7 @@ play {
 }
 dependencies {
 
+    //noinspection GradleDependency
     implementation "androidx.core:core-ktx:$rootProject.ext.core_ktx"
     implementation "androidx.appcompat:appcompat:$rootProject.ext.appcompat"
     implementation "com.google.android.material:material:$rootProject.ext.material"
