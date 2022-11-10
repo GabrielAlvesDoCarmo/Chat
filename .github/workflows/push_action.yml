@@ -20,7 +20,7 @@ jobs:
           KEYSTORE: ${{secrets.KEYSTORE_PROPERTIES_FILE_APP_CHAT}}
           FIREBASE: ${{secrets.KEYSTORE_PROPERTIES_FILE_APP_CHAT}}
         run: |
-          echo $APPID | export APP_CHAT_ID_FIREBASE=$APPID,
+          export APP_CHAT_ID_FIREBASE=$APPID,
           echo $KEYSTORE | base64 -d > app/keystore.properties,
           cd app/,
           ls -lla,
