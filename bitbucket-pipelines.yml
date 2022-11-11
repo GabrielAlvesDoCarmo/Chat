@@ -49,7 +49,7 @@ pipelines:
             - gradle
             - gradle-wrapper
           script:
-            - ./gradlew sonarqube
+            - ./gradlew sonar
       - step:
           name: Unit Test
           caches:
