@@ -1,19 +1,19 @@
 image: androidsdk/android-30
-definitions:
-  steps: &build-step
-    - step:
-        name: SonarQube analysis
-        image: sonarsource/sonar-scanner-cli:latest
-        caches:
-          - sonar
-        script:
-          - sonar-scanner
-  caches:
-    sonar: /opt/sonar-scanner/.sonar
-    gradle-wrapper: ~/.gradle/wrapper/
-
-clone:
-  depth: full
+#definitions:
+#  steps: &build-step
+#    - step:
+#        name: SonarQube analysis
+#        image: sonarsource/sonar-scanner-cli:latest
+#        caches:
+#          - sonar
+#        script:
+#          - sonar-scanner
+#  caches:
+#    sonar: /opt/sonar-scanner/.sonar
+#    gradle-wrapper: ~/.gradle/wrapper/
+#
+#clone:
+#  depth: full
 pipelines:
   custom:
     testgruop:
