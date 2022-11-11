@@ -51,13 +51,13 @@ android {
                 artifactType = "APK"
                 releaseNotesFile = "app/releasenotes.txt"
                 groups = "Testers"
-                serviceCredentialsFile = System.getenv("FIREBASE_CREDENCIAL_FILE_APP_CHAT") ?: "firebase_service_distribuition.json"
+                serviceCredentialsFile = System.getenv("FIREBASE_CREDENCIAL_FILE_APP_CHAT") ?: firebaseServiceDistribuition
             }
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
     kotlinOptions {
         jvmTarget = "$rootProject.ext.jvmTarget"
@@ -75,11 +75,10 @@ android {
     }
 }
 play {
-    serviceAccountCredentials.set(file(System.getenv("SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT")) ?: file("service_account_play_console.json"))
+    serviceAccountCredentials.set(file(System.getenv("SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT")) ?: file(serviceAccountPlayConsole))
 }
 dependencies {
 
-    //noinspection GradleDependency
     implementation "androidx.core:core-ktx:$rootProject.ext.core_ktx"
     implementation "androidx.appcompat:appcompat:$rootProject.ext.appcompat"
     implementation "com.google.android.material:material:$rootProject.ext.material"
