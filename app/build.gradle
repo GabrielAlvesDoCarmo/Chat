@@ -66,11 +66,11 @@ android {
         properties {
             property "sonar.projectName", "Chat"
             property "sonar.projectKey", "Chat"
-            property "sonar.host.url", localhostSonarqube ?: "http://localhost:9000"
+            property "sonar.host.url",v "http://localhost:9000"
             property "sonar.language", "kotlin"
             property "sonar.sources", "D:\\AndroidProjects\\Kotlin\\Chat\\app\\src\\main"
-            property "sonar.login", adminSonarqube ?: "admin"
-            property "sonar.password", passwordSonarqube ?: "G@404trt"
+            property "sonar.login", "admin"
+            property "sonar.password", "G@404trt"
         }
     }
 }
