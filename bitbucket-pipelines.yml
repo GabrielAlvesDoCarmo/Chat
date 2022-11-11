@@ -26,12 +26,14 @@ pipelines:
   branches:
     master:
       - step:
-          name: Build App
+          name: Build gradle
           image: androidsdk/android-30
           caches:
             - gradle
             - gradle-wrapper
+            - sonar
           script:
+            - ./gradlew build
             - ./gradlew assembleDebug
             - ./gradlew lint
             - ./gradlew lintKotlin
@@ -39,36 +41,45 @@ pipelines:
             - ./gradlew build sonarqube
           artifacts:
             - app/build/outputs/**
-#      - step:
-#          name: lint
-#          caches:
-#            - gradle
-#            - gradle-wrapper
-#          script:
-#            - ./gradlew lint
-#          artifacts:
-#            - app/build/reports/**
-#      - step:
-#          name: Ktlint
-#          caches:
-#            - gradle
-#            - gradle-wrapper
-#          script:
-#            - ./gradlew lintKotlin
-#      - step:
-#          name: detekt
-#          caches:
-#            - gradle
-#            - gradle-wrapper
-#          script:
-#            - ./gradlew detekt
-#      - step:
-#          name: sonarqube
-#          caches:
-#            - gradle
-#            - gradle-wrapper
-#          script:
-#            - ./gradlew sonar
+      - step:
+          name: lint
+          caches:
+            - gradle
+            - gradle-wrapper
+            - sonar
+          script:
+            - ./gradlew lint
+          artifacts:
+            - app/build/reports/lint-results-debug.html
+      - step:
+          name: Ktlint
+          caches:
+            - gradle
+            - gradle-wrapper
+            - sonar
+          script:
+            - ./gradlew lintKotlin
+          artifacts:
+            - app/build/reports/klint/**
+      - step:
+          name: detekt
+          caches:
+            - gradle
+            - gradle-wrapper
+            - sonar
+          script:
+            - ./gradlew detekt
+          artifacts:
+            - app/build/reports/detekt/**
+      - step:
+          name: sonarqube
+          caches:
+            - gradle
+            - gradle-wrapper
+          script:
+            - ./gradlew sonar
+          artifacts:
+            - app/build/sonar/**
 #      - step:
 #          name: Unit Test
 #          caches:
