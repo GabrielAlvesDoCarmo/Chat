@@ -34,11 +34,6 @@ pipelines:
             - sonar
           script:
             - ./gradlew build
-            - ./gradlew assembleDebug
-            - ./gradlew lint
-            - ./gradlew lintKotlin
-            - ./gradlew detekt
-            - ./gradlew build sonarqube
           artifacts:
             - app/build/outputs/**
       - step:
@@ -76,10 +71,31 @@ pipelines:
           caches:
             - gradle
             - gradle-wrapper
+            - sonar
           script:
-            - ./gradlew sonar
+            - ./gradlew build sonarqube
           artifacts:
             - app/build/sonar/**
+      - step:
+          name: build debug
+          caches:
+            - gradle
+            - gradle-wrapper
+            - sonar
+          script:
+            - ./gradlew assembleDebug
+          artifacts:
+            - app/build/outputs/apk/debug/app-debug.apk
+      - step:
+          name: build release
+          caches:
+            - gradle
+            - gradle-wrapper
+            - sonar
+          script:
+            - ./gradlew assembleRelease
+          artifacts:
+            - app/build/outputs/apk/debug/app-debug.apk
 #      - step:
 #          name: Unit Test
 #          caches:
