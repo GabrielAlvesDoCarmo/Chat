@@ -18,31 +18,37 @@ pipelines:
             - gradle-wrapper
           script:
             - ./gradlew assembleDebug
+            - ./gradlew lint
+            - ./gradlew lintKotlin
+            - ./gradlew detekt
+            - ./gradlew sonar
+            - ./gradlew testDebugUnitTest
+            - ./gradlew assembleRelease
           artifacts:
             - app/build/outputs/**
-      - step:
-          name: lint
-          caches:
-            - gradle
-            - gradle-wrapper
-          script:
-            - ./gradlew lint
-          artifacts:
-            - app/build/reports/**
-      - step:
-          name: Ktlint
-          caches:
-            - gradle
-            - gradle-wrapper
-          script:
-            - ./gradlew lintKotlin
-      - step:
-          name: detekt
-          caches:
-            - gradle
-            - gradle-wrapper
-          script:
-            - ./gradlew detekt
+#      - step:
+#          name: lint
+#          caches:
+#            - gradle
+#            - gradle-wrapper
+#          script:
+#            - ./gradlew lint
+#          artifacts:
+#            - app/build/reports/**
+#      - step:
+#          name: Ktlint
+#          caches:
+#            - gradle
+#            - gradle-wrapper
+#          script:
+#            - ./gradlew lintKotlin
+#      - step:
+#          name: detekt
+#          caches:
+#            - gradle
+#            - gradle-wrapper
+#          script:
+#            - ./gradlew detekt
 #      - step:
 #          name: sonarqube
 #          caches:
