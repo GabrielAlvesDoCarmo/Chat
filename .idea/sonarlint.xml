@@ -3,6 +3,6 @@
   <component name="SonarLintProjectSettings">
     <option name="bindingEnabled" value="true" />
     <option name="projectKey" value="Chat" />
-    <option name="serverId" value="Default" />
+    <option name="serverId" value="default" />
   </component>
 </project>
