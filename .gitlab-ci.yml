@@ -33,10 +33,6 @@ test:
 #  script:
 #    -echo "detek"
 #
-#checkstyle:
-#  script:
-#    -echo "checkstyle"
-#
 #sonarqube:
 #  script:
 #    -echo "sonar"
