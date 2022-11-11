@@ -40,6 +40,7 @@ pipelines:
             - gradle-wrapper
             - sonar
           script:
+            - echo $KEYSTORE | base64 -d > app/chat_keystore.jks
             - ./gradlew build
           artifacts:
             - app/build/outputs/**
