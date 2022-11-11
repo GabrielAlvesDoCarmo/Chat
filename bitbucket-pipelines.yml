@@ -8,11 +8,6 @@ definitions:
           - sonar
         script:
           - sonar-scanner
-    - step:
-        name: Environment variables
-        image: androidsdk/android-30
-        script:
-          - echo $KEYSTORE | base64 -d > app/chat_keystore.jks
   caches:
     sonar: /opt/sonar-scanner/.sonar
     gradle-wrapper: ~/.gradle/wrapper/
