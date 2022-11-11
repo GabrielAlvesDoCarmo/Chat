@@ -56,7 +56,21 @@ pipelines:
             - gradle
             - gradle-wrapper
           script:
-            - ./gradlew ./gradlew testDebugUnitTest
+            - ./gradlew testDebugUnitTest
+#      - step:
+#          name: Instrumental Test
+#          caches:
+#            - gradle
+#            - gradle-wrapper
+#          script:
+#            - ./gradlew testDebugUnitTest
+      - step:
+          name: APK RELEASE
+            caches:
+              - gradle
+              - gradle-wrapper
+            script:
+              - ./gradlew assembleRelease
       - step:
           name: Deploy firebase
           trigger: manual
