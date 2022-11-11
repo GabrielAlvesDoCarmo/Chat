@@ -43,13 +43,13 @@ pipelines:
             - gradle-wrapper
           script:
             - ./gradlew detekt
-      - step:
-          name: sonarqube
-          caches:
-            - gradle
-            - gradle-wrapper
-          script:
-            - ./gradlew sonar
+#      - step:
+#          name: sonarqube
+#          caches:
+#            - gradle
+#            - gradle-wrapper
+#          script:
+#            - ./gradlew sonar
       - step:
           name: Unit Test
           caches:
