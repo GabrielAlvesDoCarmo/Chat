@@ -13,6 +13,8 @@ definitions:
         image: androidsdk/android-30
         script:
           - echo $KEYSTORE | base64 -d > app/chat_keystore.jks
+          - echo $SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT | base64 -d > SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT
+          - export SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT
   caches:
     sonar: /opt/sonar-scanner/.sonar
     gradle-wrapper: ~/.gradle/wrapper/
