@@ -56,7 +56,7 @@ pipelines:
             - gradle
             - gradle-wrapper
           script:
-            - ./gradlew ./gradlew test
+            - ./gradlew ./gradlew testDebugUnitTest
       - step:
           name: Deploy firebase
           trigger: manual
