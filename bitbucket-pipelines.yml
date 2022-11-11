@@ -1,5 +1,19 @@
 image: androidsdk/android-30
+definitions:
+  steps: &build-step
+    - step:
+        name: SonarQube analysis
+        image: sonarsource/sonar-scanner-cli:latest
+        caches:
+          - sonar
+        script:
+          - sonar-scanner
+  caches:
+    sonar: /opt/sonar-scanner/.sonar
+    gradle-wrapper: ~/.gradle/wrapper/
 
+clone:
+  depth: full
 pipelines:
   custom:
     testgruop:
@@ -18,24 +32,6 @@ pipelines:
             - gradle
             - gradle-wrapper
           script:
-            - sudo apt-get update
-            - sudo apt-get -y upgrade
-            - sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" >> /etc/apt/sources.list.d/pgdg.list'
-            - wget -q https://www.postgresql.org/media/keys/ACCC4CF8.asc -O - | sudo apt-key add -
-            - sudo apt-get -y install postgresql postgresql-contrib
-            - sudo systemctl start postgresql
-            - sudo systemctl enable postgresql
-            - su - postgres
-            - createuser sonar
-            - psql
-            - ALTER USER sonar WITH ENCRYPTED password '12345678';
-            - \q
-            - exit
-            - wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-7.3.zip
-            - apt-get -y install unzip
-            - sudo unzip sonarqube-7.3.zip -d /opt
-            - sudo mv /opt/sonarqube-7.3 /opt/sonarqube
-            - sudo chown -R administrator:administrator /opt/sonarqube/
             - ./gradlew assembleDebug
             - ./gradlew lint
             - ./gradlew lintKotlin
@@ -99,7 +95,4 @@ pipelines:
           trigger: manual
           script:
             - ./gradlew assembleRelease publishBundle
-definitions:
-  caches:
-    gradle-wrapper:
-      ~/.gradle/wrapper/
+
