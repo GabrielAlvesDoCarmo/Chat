@@ -53,6 +53,13 @@ android {
                 groups = "Testers"
                 serviceCredentialsFile = System.getenv("FIREBASE_CREDENCIAL_FILE_APP_CHAT") ?: firebaseServiceDistribuition
             }
+            sonarqube {
+                properties {
+                    property "sonar.projectKey", "gdsdesenvolvimento-admin_chat"
+                    property "sonar.organization", "gdsdesenvolvimento-admin"
+                    property "sonar.host.url", "https://sonarcloud.io"
+                }
+            }
         }
     }
     compileOptions {
@@ -61,13 +68,6 @@ android {
     }
     kotlinOptions {
         jvmTarget = "$rootProject.ext.jvmTarget"
-    }
-    sonarqube {
-        properties {
-            property "sonar.projectKey", "gdsdesenvolvimento-admin_chat"
-            property "sonar.organization", "gdsdesenvolvimento-admin"
-            property "sonar.host.url", "https://sonarcloud.io"
-        }
     }
 //    sonarqube {
 //        properties {

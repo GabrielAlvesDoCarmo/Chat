@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JsonSchemaMappingsProjectConfiguration">
+    <state>
+      <map>
+        <entry key="Bitbucket Pipelines configuration">
+          <value>
+            <SchemaInfo>
+              <option name="name" value="Bitbucket Pipelines configuration" />
+              <option name="relativePathToSchema" value="jar://$APPLICATION_PLUGINS_DIR$/bitbucket-linky-plugin/lib/bitbucket-linky-plugin-2020.3.jar!/schemas/bitbucket-pipelines.schema.json" />
+              <option name="applicationDefined" value="true" />
+              <option name="patterns">
+                <list>
+                  <Item>
+                    <option name="path" value="bitbucket-pipelines.yml" />
+                  </Item>
+                </list>
+              </option>
+            </SchemaInfo>
+          </value>
+        </entry>
+      </map>
+    </state>
+  </component>
+</project>
