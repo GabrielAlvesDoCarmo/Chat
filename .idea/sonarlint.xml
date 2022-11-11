@@ -2,7 +2,7 @@
 <project version="4">
   <component name="SonarLintProjectSettings">
     <option name="bindingEnabled" value="true" />
-    <option name="projectKey" value="Chat" />
-    <option name="serverId" value="default" />
+    <option name="projectKey" value="gdsdesenvolvimento-admin_chat" />
+    <option name="serverId" value="sonarcloud" />
   </component>
 </project>

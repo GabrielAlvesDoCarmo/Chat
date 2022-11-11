@@ -69,17 +69,17 @@ android {
             property "sonar.host.url", "https://sonarcloud.io"
         }
     }
-    sonarqube {
-        properties {
-            property "sonar.projectName", "Chat"
-            property "sonar.projectKey", "Chat"
-            property "sonar.host.url", "http://localhost:9000"
-            property "sonar.language", "kotlin"
-            property "sonar.sources", "D:\\AndroidProjects\\Kotlin\\Chat\\app\\src\\main"
-            property "sonar.login", "admin"
-            property "sonar.password", "G@404trt"
-        }
-    }
+//    sonarqube {
+//        properties {
+//            property "sonar.projectName", "Chat"
+//            property "sonar.projectKey", "Chat"
+//            property "sonar.host.url", "http://localhost:9000"
+//            property "sonar.language", "kotlin"
+//            property "sonar.sources", "D:\\AndroidProjects\\Kotlin\\Chat\\app\\src\\main"
+//            property "sonar.login", "admin"
+//            property "sonar.password", "G@404trt"
+//        }
+//    }
 }
 play {
     serviceAccountCredentials.set(file(System.getenv("SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT")) ?: file(serviceAccountPlayConsole))
