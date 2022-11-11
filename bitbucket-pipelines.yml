@@ -50,13 +50,13 @@ pipelines:
 #            - gradle-wrapper
 #          script:
 #            - ./gradlew sonar
-      - step:
-          name: Unit Test
-          caches:
-            - gradle
-            - gradle-wrapper
-          script:
-            - ./gradlew testDebugUnitTest
+#      - step:
+#          name: Unit Test
+#          caches:
+#            - gradle
+#            - gradle-wrapper
+#          script:
+#            - ./gradlew testDebugUnitTest
 #      - step:
 #          name: Instrumental Test
 #          caches:
@@ -64,13 +64,6 @@ pipelines:
 #            - gradle-wrapper
 #          script:
 #            - ./gradlew testDebugUnitTest
-      - step:
-          name: APK RELEASE
-            caches:
-              - gradle
-              - gradle-wrapper
-            script:
-              - ./gradlew assembleRelease
       - step:
           name: Deploy firebase
           trigger: manual
@@ -81,47 +74,6 @@ pipelines:
           trigger: manual
           script:
             - ./gradlew assembleRelease publishBundle
-    development:
-      - step:
-          name: Define Envolvirement
-          caches:
-            - gradle
-            - gradle/wrapper
-          script:
-            - base64 -d
-          artifacts:
-            - app/build/outputs/**
-    release/*:
-      - step:
-          name: Define Envolvirement
-          caches:
-            - gradle
-            - gradle/wrapper
-          script:
-            - base64 -d
-          artifacts:
-            - app/build/outputs/**
-    feature/*:
-      - step:
-          name: Define Envolvirement
-          caches:
-            - gradle
-            - gradle/wrapper
-          script:
-            - base64 -d
-          artifacts:
-            - app/build/outputs/**
-    default:
-      - step:
-          name: Define Envolvirement
-          caches:
-            - gradle
-            - gradle/wrapper
-          script:
-            - base64 -d
-          artifacts:
-            - app/build/outputs/**
-
 definitions:
   caches:
     gradle-wrapper:
