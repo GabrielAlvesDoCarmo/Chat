@@ -13,6 +13,7 @@ pipelines:
     master:
       - step:
           name: Build App
+          image: atlassian/default-image:latest
           caches:
             - gradle
             - gradle-wrapper
