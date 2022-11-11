@@ -18,6 +18,9 @@ pipelines:
             - gradle
             - gradle-wrapper
           script:
+            - ls -lal
+            - sudo apt-get install node
+            - ls -lal
             - ./gradlew assembleDebug
             - ./gradlew lint
             - ./gradlew lintKotlin
