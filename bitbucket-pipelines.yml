@@ -36,7 +36,7 @@ pipelines:
             - ./gradlew lint
             - ./gradlew lintKotlin
             - ./gradlew detekt
-            - ./gradlew sonar
+            - ./gradlew build sonarqube
             - ./gradlew testDebugUnitTest
             - ./gradlew assembleRelease
           artifacts:
