@@ -19,6 +19,8 @@ pipelines:
             - gradle-wrapper
           script:
             - ls -lal
+            - cd ../../../../../
+            - ls -lal
             - sudo apt-get install node
             - ls -lal
             - ./gradlew assembleDebug
