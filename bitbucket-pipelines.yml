@@ -27,7 +27,7 @@ pipelines:
     master:
       - step:
           name: Build App
-          image: atlassian/default-image:latest
+          image: androidsdk/android-30
           caches:
             - gradle
             - gradle-wrapper
