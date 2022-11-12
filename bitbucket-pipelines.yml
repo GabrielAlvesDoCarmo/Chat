@@ -33,18 +33,15 @@ pipelines:
   branches:
     master:
       - step:
-          name: Build gradle
+          name: Setup environment
           image: androidsdk/android-30
           caches:
             - gradle
             - gradle-wrapper
-            - sonar
           script:
             - echo $KEYSTORE | base64 -d > app/chat_keystore.jks
             - echo $FIREBASE_CREDENCIAL_FILE_APP_CHAT | base64 > app/firebase-service-distribuition.json
             - echo $SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT | base64 > app/service-account-play-console.json
-            - cd app
-            - ls -lal
           artifacts:
             - app/build/outputs/**
       - step:
@@ -52,7 +49,6 @@ pipelines:
           caches:
             - gradle
             - gradle-wrapper
-            - sonar
           script:
             - ./gradlew lint
           artifacts:
@@ -62,7 +58,6 @@ pipelines:
           caches:
             - gradle
             - gradle-wrapper
-            - sonar
           script:
             - ./gradlew lintKotlin
           artifacts:
@@ -72,7 +67,6 @@ pipelines:
           caches:
             - gradle
             - gradle-wrapper
-            - sonar
           script:
             - ./gradlew detekt
           artifacts:
@@ -84,9 +78,6 @@ pipelines:
             - gradle-wrapper
             - sonar
           script:
-            - echo $KEYSTORE | base64 -d > app/chat_keystore.jks
-            - cd app
-            - ls -lal
             - ./gradlew build sonarqube
           artifacts:
             - app/build/sonar/**
@@ -95,7 +86,6 @@ pipelines:
           caches:
             - gradle
             - gradle-wrapper
-            - sonar
           script:
             - ./gradlew assembleDebug
           artifacts:
@@ -105,7 +95,6 @@ pipelines:
           caches:
             - gradle
             - gradle-wrapper
-            - sonar
           script:
             - ./gradlew assembleRelease
           artifacts:
