@@ -81,7 +81,7 @@ pipelines:
           artifacts:
             - app/build/sonar/**
       - step:
-          name: build debug
+          name: Version Debug APK
           caches:
             - gradle
             - gradle-wrapper
@@ -90,7 +90,7 @@ pipelines:
           artifacts:
             - app/build/outputs/apk/debug/app-debug.apk
       - step:
-          name: build release
+          name: Version Release APK
           caches:
             - gradle
             - gradle-wrapper

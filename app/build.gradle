@@ -51,7 +51,7 @@ android {
                 artifactType = "APK"
                 releaseNotesFile = "app/releasenotes.txt"
                 groups = "Testers"
-                serviceCredentialsFile = System.getenv("FIREBASE_CREDENCIAL_FILE_APP_CHAT") ?: firebaseServiceDistribuition
+                serviceCredentialsFile = System.getenv("FIREBASE_CREDENCIAL_FILE_APP_CHAT") ?: file("firebase_service_distribuition.json")
             }
         }
     }
