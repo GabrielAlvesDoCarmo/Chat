@@ -33,7 +33,7 @@ pipelines:
   branches:
     master:
       - step:
-          name: Setup environment
+          name: Environment Setup
           image: androidsdk/android-30
           caches:
             - gradle
@@ -42,10 +42,8 @@ pipelines:
             - echo $KEYSTORE | base64 -d > app/chat_keystore.jks
             - echo $FIREBASE_CREDENCIAL_FILE_APP_CHAT | base64 -d > app/firebase-service-distribuition.json
             - echo $SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT | base64 -d > app/service-account-play-console.json
-          artifacts:
-            - app/build/outputs/**
       - step:
-          name: lint
+          name: Lint Test
           caches:
             - gradle
             - gradle-wrapper
@@ -54,7 +52,7 @@ pipelines:
           artifacts:
             - app/build/reports/lint-results-debug.html
       - step:
-          name: Ktlint
+          name: Ktlint Test
           caches:
             - gradle
             - gradle-wrapper
@@ -63,7 +61,7 @@ pipelines:
           artifacts:
             - app/build/reports/klint/**
       - step:
-          name: detekt
+          name: Detekt Test
           caches:
             - gradle
             - gradle-wrapper
@@ -72,7 +70,7 @@ pipelines:
           artifacts:
             - app/build/reports/detekt/**
       - step:
-          name: sonarqube
+          name: Sonarqube Test
           caches:
             - gradle
             - gradle-wrapper
@@ -97,6 +95,7 @@ pipelines:
             - gradle
             - gradle-wrapper
           script:
+            - echo $KEYSTORE | base64 -d > app/chat_keystore.jks
             - ./gradlew assembleRelease
           artifacts:
             - app/build/outputs/apk/debug/app-debug.apk
@@ -118,10 +117,16 @@ pipelines:
           name: Deploy firebase
           trigger: manual
           script:
+            - echo $KEYSTORE | base64 -d > app/chat_keystore.jks
+            - echo $FIREBASE_CREDENCIAL_FILE_APP_CHAT | base64 -d > app/firebase-service-distribuition.json
+            - echo $SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT | base64 -d > app/service-account-play-console.json
             - ./gradlew assembleRelease appDistributionUploadRelease
       - step:
           name: Deploy play console
           trigger: manual
           script:
+            - echo $KEYSTORE | base64 -d > app/chat_keystore.jks
+            - echo $FIREBASE_CREDENCIAL_FILE_APP_CHAT | base64 -d > app/firebase-service-distribuition.json
+            - echo $SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT | base64 -d > app/service-account-play-console.json
             - ./gradlew assembleRelease publishBundle
 
