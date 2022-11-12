@@ -8,6 +8,13 @@ definitions:
           - sonar
         script:
           - sonar-scanner
+    - step:
+        name: Environment variables
+        image: androidsdk/android-30
+        script:
+          - echo $KEYSTORE | base64 -d > app/chat_keystore.jks
+          - echo $SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT | base64 -d > SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT
+          - export SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT
   caches:
     sonar: /opt/sonar-scanner/.sonar
     gradle-wrapper: ~/.gradle/wrapper/
@@ -33,12 +40,10 @@ pipelines:
             - gradle-wrapper
             - sonar
           script:
+            - echo $KEYSTORE | base64 -d > app/chat_keystore.jks
+            - cd app
+            - ls -lal
             - ./gradlew build
-            - ./gradlew assembleDebug
-            - ./gradlew lint
-            - ./gradlew lintKotlin
-            - ./gradlew detekt
-            - ./gradlew build sonarqube
           artifacts:
             - app/build/outputs/**
       - step:
@@ -76,24 +81,48 @@ pipelines:
           caches:
             - gradle
             - gradle-wrapper
+            - sonar
           script:
-            - ./gradlew sonar
+            - echo $KEYSTORE | base64 -d > app/chat_keystore.jks
+            - cd app
+            - ls -lal
+            - ./gradlew build sonarqube
           artifacts:
             - app/build/sonar/**
-      #      - step:
-      #          name: Unit Test
-      #          caches:
-      #            - gradle
-      #            - gradle-wrapper
-      #          script:
-      #            - ./gradlew testDebugUnitTest
-      #      - step:
-      #          name: Instrumental Test
-      #          caches:
-      #            - gradle
-      #            - gradle-wrapper
-      #          script:
-      #            - ./gradlew testDebugUnitTest
+      - step:
+          name: build debug
+          caches:
+            - gradle
+            - gradle-wrapper
+            - sonar
+          script:
+            - ./gradlew assembleDebug
+          artifacts:
+            - app/build/outputs/apk/debug/app-debug.apk
+      - step:
+          name: build release
+          caches:
+            - gradle
+            - gradle-wrapper
+            - sonar
+          script:
+            - ./gradlew assembleRelease
+          artifacts:
+            - app/build/outputs/apk/debug/app-debug.apk
+#      - step:
+#          name: Unit Test
+#          caches:
+#            - gradle
+#            - gradle-wrapper
+#          script:
+#            - ./gradlew testDebugUnitTest
+#      - step:
+#          name: Instrumental Test
+#          caches:
+#            - gradle
+#            - gradle-wrapper
+#          script:
+#            - ./gradlew testDebugUnitTest
       - step:
           name: Deploy firebase
           trigger: manual
