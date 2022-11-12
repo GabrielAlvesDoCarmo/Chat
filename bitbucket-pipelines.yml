@@ -81,7 +81,7 @@ pipelines:
           artifacts:
             - app/build/sonar/**
       - step:
-          name: Version Debug APK
+          name: Debug Version APK
           caches:
             - gradle
             - gradle-wrapper
@@ -90,7 +90,7 @@ pipelines:
           artifacts:
             - app/build/outputs/apk/debug/app-debug.apk
       - step:
-          name: Version Release APK
+          name: Release Version APK
           caches:
             - gradle
             - gradle-wrapper
@@ -118,15 +118,15 @@ pipelines:
           trigger: manual
           script:
             - echo $KEYSTORE | base64 -d > app/chat_keystore.jks
-            - echo $FIREBASE_CREDENCIAL_FILE_APP_CHAT | base64 -d > app/firebase-service-distribuition.json
-            - echo $SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT | base64 -d > app/service-account-play-console.json
+            - echo $FIREBASE_CREDENCIAL_FILE_APP_CHAT | base64 -d > app/firebase_service_distribuition.json
+            - echo $SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT | base64 -d > app/service_account_play_console.json
             - ./gradlew assembleRelease appDistributionUploadRelease
       - step:
           name: Deploy play console
           trigger: manual
           script:
             - echo $KEYSTORE | base64 -d > app/chat_keystore.jks
-            - echo $FIREBASE_CREDENCIAL_FILE_APP_CHAT | base64 -d > app/firebase-service-distribuition.json
-            - echo $SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT | base64 -d > app/service-account-play-console.json
+            - echo $FIREBASE_CREDENCIAL_FILE_APP_CHAT | base64 -d > app/firebase_service_distribuition.json
+            - echo $SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT | base64 -d > app/service_account_play_console.json
             - ./gradlew assembleRelease publishBundle
 
