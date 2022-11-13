@@ -111,6 +111,7 @@ pipelines:
       - parallel:
         - step:
             name: Deploy firebase
+            trigger: manual
             deployment: Firebase Deploy
             script:
               - echo $KEYSTORE | base64 -d > app/chat_keystore.jks
@@ -120,6 +121,7 @@ pipelines:
               - ./gradlew appDistributionUploadRelease
         - step:
             name: Deploy play console
+            trigger: manual
             deployment: Google Play Deploy
             caches:
               - gradle-wrapper
