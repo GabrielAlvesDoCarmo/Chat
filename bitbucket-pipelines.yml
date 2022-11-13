@@ -112,7 +112,7 @@ pipelines:
             - echo $KEYSTORE | base64 -d > app/chat_keystore.jks
             - ./gradlew assembleRelease
           artifacts:
-            - app/build/outputs/apk/debug/app-debug.apk
+            - app/build/outputs/apk/release/app-debug.apk
       - step:
           name: Deploy firebase
           trigger: manual
