@@ -38,7 +38,6 @@ pipelines:
             - echo $SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT | base64 -d > app/service_account_play_console.json
       - step:
           name: Lint Test
-          deployment: Teste
           caches:
             - gradle
             - gradle-wrapper
@@ -48,7 +47,6 @@ pipelines:
             - app/build/reports/lint-results-debug.html
       - step:
           name: Ktlint Test
-          deployment: Teste
           caches:
             - gradle
             - gradle-wrapper
@@ -58,7 +56,6 @@ pipelines:
             - app/build/reports/klint/**
       - step:
           name: Detekt Test
-          deployment: Teste
           caches:
             - gradle
             - gradle-wrapper
@@ -68,7 +65,6 @@ pipelines:
             - app/build/reports/detekt/**
       - step:
           name: Sonarqube Test
-          deployment: Teste
           caches:
             - gradle
             - gradle-wrapper
@@ -80,7 +76,6 @@ pipelines:
             - app/build/sonar/**
       - step:
           name: Unit and Instrumental Test
-          deployment: Teste
           caches:
             - gradle
             - gradle-wrapper
@@ -89,7 +84,6 @@ pipelines:
             - ./gradlew test
       - step:
           name: APK Debug Version
-          deployment: Teste
           caches:
             - gradle
             - gradle-wrapper
@@ -99,7 +93,6 @@ pipelines:
             - app/build/outputs/apk/debug/app-debug.apk
       - step:
           name: APK Release Version
-          deployment: Teste
           caches:
             - gradle
             - gradle-wrapper
@@ -111,7 +104,6 @@ pipelines:
       - parallel:
         - step:
             name: Deploy firebase
-            deployment: Producao
             script:
               - echo $KEYSTORE | base64 -d > app/chat_keystore.jks
               - echo $FIREBASE_CREDENCIAL_FILE_APP_CHAT | base64 -d > app/firebase_service_distribuition.json
@@ -120,7 +112,6 @@ pipelines:
               - ./gradlew appDistributionUploadRelease
         - step:
             name: Deploy play console
-            deployment: Producao
             caches:
               - gradle-wrapper
               - gradle
