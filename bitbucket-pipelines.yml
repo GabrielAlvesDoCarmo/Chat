@@ -32,54 +32,54 @@ pipelines:
             - ./gradlew sonarqube
   branches:
     master:
-      - step:
-          name: Environment Setup
-          image: androidsdk/android-30
-          caches:
-            - gradle
-            - gradle-wrapper
-          script:
-            - echo $KEYSTORE | base64 -d > app/chat_keystore.jks
-            - echo $FIREBASE_CREDENCIAL_FILE_APP_CHAT | base64 -d > app/firebase_service_distribuition.json
-            - echo $SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT | base64 -d > app/service_account_play_console.json
-      - step:
-          name: Lint Test
-          caches:
-            - gradle
-            - gradle-wrapper
-          script:
-            - ./gradlew lint
-          artifacts:
-            - app/build/reports/lint-results-debug.html
-      - step:
-          name: Ktlint Test
-          caches:
-            - gradle
-            - gradle-wrapper
-          script:
-            - ./gradlew lintKotlin
-          artifacts:
-            - app/build/reports/klint/**
-      - step:
-          name: Detekt Test
-          caches:
-            - gradle
-            - gradle-wrapper
-          script:
-            - ./gradlew detekt
-          artifacts:
-            - app/build/reports/detekt/**
-      - step:
-          name: Sonarqube Test
-          caches:
-            - gradle
-            - gradle-wrapper
-            - sonar
-          script:
-            - echo $KEYSTORE | base64 -d > app/chat_keystore.jks
-            - ./gradlew build sonarqube
-          artifacts:
-            - app/build/sonar/**
+#      - step:
+#          name: Environment Setup
+#          image: androidsdk/android-30
+#          caches:
+#            - gradle
+#            - gradle-wrapper
+#          script:
+#            - echo $KEYSTORE | base64 -d > app/chat_keystore.jks
+#            - echo $FIREBASE_CREDENCIAL_FILE_APP_CHAT | base64 -d > app/firebase_service_distribuition.json
+#            - echo $SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT | base64 -d > app/service_account_play_console.json
+#      - step:
+#          name: Lint Test
+#          caches:
+#            - gradle
+#            - gradle-wrapper
+#          script:
+#            - ./gradlew lint
+#          artifacts:
+#            - app/build/reports/lint-results-debug.html
+#      - step:
+#          name: Ktlint Test
+#          caches:
+#            - gradle
+#            - gradle-wrapper
+#          script:
+#            - ./gradlew lintKotlin
+#          artifacts:
+#            - app/build/reports/klint/**
+#      - step:
+#          name: Detekt Test
+#          caches:
+#            - gradle
+#            - gradle-wrapper
+#          script:
+#            - ./gradlew detekt
+#          artifacts:
+#            - app/build/reports/detekt/**
+#      - step:
+#          name: Sonarqube Test
+#          caches:
+#            - gradle
+#            - gradle-wrapper
+#            - sonar
+#          script:
+#            - echo $KEYSTORE | base64 -d > app/chat_keystore.jks
+#            - ./gradlew build sonarqube
+#          artifacts:
+#            - app/build/sonar/**
 #      - step:
 #          name: Unit Test
 #          caches:
@@ -94,43 +94,40 @@ pipelines:
 #            - gradle-wrapper
 #          script:
 #            - ./gradlew testDebugUnitTest
-      - step:
-          name: APK Debug Version
-          caches:
-            - gradle
-            - gradle-wrapper
-          script:
-            - ./gradlew assembleDebug
-          artifacts:
-            - app/build/outputs/apk/debug/app-debug.apk
-      - step:
-          name: APK Release Version
-          caches:
-            - gradle
-            - gradle-wrapper
-          script:
-            - echo $KEYSTORE | base64 -d > app/chat_keystore.jks
-            - ./gradlew assembleRelease
-          artifacts:
-            - app/build/outputs/apk/release/app-debug.apk
-      - step:
-          name: Deploy firebase
-          trigger: manual
-          script:
-            - echo $KEYSTORE | base64 -d > app/chat_keystore.jks
-            - echo $FIREBASE_CREDENCIAL_FILE_APP_CHAT | base64 -d > app/firebase_service_distribuition.json
-            - printenv
-            - export FIREBASE_CREDENCIAL_FILE_APP_CHAT=app/firebase_service_distribuition.json
-            - printenv
-            - ./gradlew assembleRelease
-            - ./gradlew appDistributionUploadRelease
+#      - step:
+#          name: APK Debug Version
+#          caches:
+#            - gradle
+#            - gradle-wrapper
+#          script:
+#            - ./gradlew assembleDebug
+#          artifacts:
+#            - app/build/outputs/apk/debug/app-debug.apk
+#      - step:
+#          name: APK Release Version
+#          caches:
+#            - gradle
+#            - gradle-wrapper
+#          script:
+#            - echo $KEYSTORE | base64 -d > app/chat_keystore.jks
+#            - ./gradlew assembleRelease
+#          artifacts:
+#            - app/build/outputs/apk/release/app-debug.apk
+#      - step:
+#          name: Deploy firebase
+#          trigger: manual
+#          script:
+#            - echo $KEYSTORE | base64 -d > app/chat_keystore.jks
+#            - echo $FIREBASE_CREDENCIAL_FILE_APP_CHAT | base64 -d > app/firebase_service_distribuition.json
+#            - export FIREBASE_CREDENCIAL_FILE_APP_CHAT=app/firebase_service_distribuition.json
+#            - ./gradlew assembleRelease
+#            - ./gradlew appDistributionUploadRelease
       - step:
           name: Deploy play console
-          trigger: manual
+          trigger: automatic
           script:
             - echo $KEYSTORE | base64 -d > app/chat_keystore.jks
             - echo $SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT | base64 -d > app/service_account_play_console.json
-            - export SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT=app/service_account_play_console.json
-            - ./gradlew assembleRelease
-            - ./gradlew publishBundle
+            - export SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT=$SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT
+            - ./gradlew assembleRelease publishBundle
 
