@@ -28,6 +28,7 @@ pipelines:
     master:
       - step:
           name: Environment Setup
+          deployment: Environment
           caches:
             - gradle
             - gradle-wrapper
