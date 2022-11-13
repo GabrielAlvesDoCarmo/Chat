@@ -48,7 +48,7 @@ pipelines:
             - app/build/reports/lint-results-debug.html
       - step:
           name: Ktlint Test
-          deployment: Lint
+          deployment: Klint
           caches:
             - gradle
             - gradle-wrapper
@@ -58,7 +58,7 @@ pipelines:
             - app/build/reports/klint/**
       - step:
           name: Detekt Test
-          deployment: Lint
+          deployment: Detekt
           caches:
             - gradle
             - gradle-wrapper
@@ -106,6 +106,21 @@ pipelines:
           script:
             - echo $KEYSTORE | base64 -d > app/chat_keystore.jks
             - ./gradlew assembleRelease
+          artifacts:
+            - app/build/outputs/apk/release/app-debug.apk
+      - step:
+          name: Send Alpha PlayStore
+          deployment: PlayStore
+          trigger: manual
+          caches:
+            - gradle
+            - gradle-wrapper
+          script:
+            - echo $KEYSTORE | base64 -d > app/chat_keystore.jks
+            - echo $SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT | base64 -d > app/service_account_play_console.json
+            - export SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT=service_account_play_console.json
+            - ./gradlew assembleRelease
+            - ./gradlew promoteArtifact --promote-track alpha
           artifacts:
             - app/build/outputs/apk/release/app-debug.apk
     release/*:
