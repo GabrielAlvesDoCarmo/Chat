@@ -74,19 +74,12 @@ pipelines:
 #          artifacts:
 #            - app/build/sonar/**
 #      - step:
-#          name: Unit Test
+#          name: Unit and Instrumental Test
 #          caches:
 #            - gradle
 #            - gradle-wrapper
 #          script:
-#            - ./gradlew testDebugUnitTest
-#      - step:
-#          name: Instrumental Test
-#          caches:
-#            - gradle
-#            - gradle-wrapper
-#          script:
-#            - ./gradlew testDebugUnitTest
+#            - ./gradlew test
 #      - step:
 #          name: APK Debug Version
 #          caches:
@@ -124,11 +117,7 @@ pipelines:
           script:
             - echo $KEYSTORE | base64 -d > app/chat_keystore.jks
             - echo $SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT | base64 -d > app/service_account_play_console.json
-            - cd app
-            - ls -lla
-            - cd ..
             - export SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT=app/service_account_play_console.json
-            - printenv
             - ./gradlew assembleRelease
             - ./gradlew publishBundle
 
