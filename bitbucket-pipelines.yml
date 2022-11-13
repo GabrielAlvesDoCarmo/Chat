@@ -128,6 +128,6 @@ pipelines:
           script:
             - echo $KEYSTORE | base64 -d > app/chat_keystore.jks
             - echo $SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT | base64 -d > app/service_account_play_console.json
-            - export SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT=$SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT
+            - export SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT=app/service_account_play_console.json
             - ./gradlew assembleRelease publishBundle
 
