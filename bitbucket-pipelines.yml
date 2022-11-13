@@ -38,6 +38,7 @@ pipelines:
             - echo $SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT | base64 -d > app/service_account_play_console.json
       - step:
           name: Lint Test
+          deployment: Lint
           caches:
             - gradle
             - gradle-wrapper
@@ -47,6 +48,7 @@ pipelines:
             - app/build/reports/lint-results-debug.html
       - step:
           name: Ktlint Test
+          deployment: Klint
           caches:
             - gradle
             - gradle-wrapper
@@ -56,6 +58,7 @@ pipelines:
             - app/build/reports/klint/**
       - step:
           name: Detekt Test
+          deployment: Detekt
           caches:
             - gradle
             - gradle-wrapper
@@ -65,6 +68,7 @@ pipelines:
             - app/build/reports/detekt/**
       - step:
           name: Sonarqube Test
+          deployment: Sonarqube
           caches:
             - gradle
             - gradle-wrapper
@@ -76,6 +80,7 @@ pipelines:
             - app/build/sonar/**
       - step:
           name: Unit and Instrumental Test
+          deployment: Unit and Instrumental Test
           caches:
             - gradle
             - gradle-wrapper
@@ -84,6 +89,7 @@ pipelines:
             - ./gradlew test
       - step:
           name: APK Debug Version
+          deployment: Debug App
           caches:
             - gradle
             - gradle-wrapper
@@ -93,6 +99,7 @@ pipelines:
             - app/build/outputs/apk/debug/app-debug.apk
       - step:
           name: APK Release Version
+          deployment: Release App
           caches:
             - gradle
             - gradle-wrapper
@@ -104,6 +111,7 @@ pipelines:
       - parallel:
         - step:
             name: Deploy firebase
+            deployment: Firebase Deploy
             script:
               - echo $KEYSTORE | base64 -d > app/chat_keystore.jks
               - echo $FIREBASE_CREDENCIAL_FILE_APP_CHAT | base64 -d > app/firebase_service_distribuition.json
@@ -112,6 +120,7 @@ pipelines:
               - ./gradlew appDistributionUploadRelease
         - step:
             name: Deploy play console
+            deployment: Google Play Deploy
             caches:
               - gradle-wrapper
               - gradle
