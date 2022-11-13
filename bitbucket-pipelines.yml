@@ -1,4 +1,5 @@
 image: androidsdk/android-30
+
 definitions:
   steps: &build-step
     - step:
