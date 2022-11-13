@@ -119,6 +119,9 @@ pipelines:
           script:
             - echo $KEYSTORE | base64 -d > app/chat_keystore.jks
             - echo $FIREBASE_CREDENCIAL_FILE_APP_CHAT | base64 -d > app/firebase_service_distribuition.json
+            - printenv
+            - export FIREBASE_CREDENCIAL_FILE_APP_CHAT=app/firebase_service_distribuition.json
+            - printenv
             - ./gradlew assembleRelease
             - ./gradlew appDistributionUploadRelease
       - step:
