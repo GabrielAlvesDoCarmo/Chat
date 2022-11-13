@@ -115,6 +115,7 @@ pipelines:
             - gradle
           trigger: automatic
           script:
+            - echo $KEYSTORE | base64 -d > app/chat_keystore.jks
             - ./gradlew assembleRelease
             - ./gradlew publishBundle
 
