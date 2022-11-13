@@ -82,7 +82,7 @@ android {
 //    }
 }
 play {
-    serviceAccountCredentials.set(file(System.getenv("SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT")) ?: file("service_account_play_console.json"))
+    serviceAccountCredentials.set(file(System.getenv("SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT") ?: "service_account_play_console.json"))
 }
 dependencies {
 
