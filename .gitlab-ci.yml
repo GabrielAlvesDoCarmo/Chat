@@ -3,6 +3,8 @@ before_script:
   - echo $KEYSTORE | base64 -d > app/chat_keystore.jks
   - echo $FIREBASE_CREDENCIAL_FILE_APP_CHAT | base64 -d > app/firebase_service_distribuition.json
   - echo $SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT | base64 -d > app/service_account_play_console.json
+  - export GRADLE_USER_HOME=`pwd`/.gradle
+
 cache:
   key: gradlew
   paths:
@@ -17,30 +19,37 @@ stages:
 
 Lint:
   stage: Test
+  environment: Lint Test
   script:
     - ./gradlew lint
 
 Klint:
   stage: Test
+  environment: Klint Test
   script:
     - ./gradlew lintKotlin
+
 Detekt:
   stage: Test
+  environment: Detekt Test
   script:
     - ./gradlew detekt
 
 Sonarqube:
   stage: Test
+  environment: Sonarqube Test
   script:
     - ./gradlew build sonarqube
 
 UnitAndInstrumentalTest:
   stage: Test
+  environment: Unit and Instrumental Test
   script:
     - ./gradlew test
 
 DebugAPK:
   stage: Build
+  environment: Debug APk
   script:
     - ./gradlew assembleDebug
   artifacts:
@@ -49,6 +58,7 @@ DebugAPK:
 
 ReleaseAPK:
   stage: Build
+  environment: Release Apk
   script:
     - ./gradlew assembleRelease
   artifacts:
@@ -57,18 +67,22 @@ ReleaseAPK:
 
 Firebase:
   stage: DeployTest
+  environment: App Distribution Firebase
   script:
     - ./gradlew assembleRelease
     - ./gradlew appDistributionUploadRelease
 
-internal:
+InternalTest:
   stage: DeployTest
+  environment: Internal Test PlayConsole
   script:
     - ./gradlew assembleRelease
     - ./gradlew publishBundle
 
-#Alpha:
-#  stage: PlayStore
-#  script:
-#    - ./gradlew assembleRelease
-#    - ./gradlew promoteArtifact --promote-track alpha
+Alpha:
+  stage: PlayStore
+  environment: PlayStore
+  when: manual
+  script:
+    - ./gradlew assembleRelease
+    - ./gradlew promoteArtifact --promote-track alpha
