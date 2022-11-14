@@ -4,6 +4,22 @@ before_script:
   - echo $FIREBASE_CREDENCIAL_FILE_APP_CHAT | base64 -d > app/firebase_service_distribuition.json
   - echo $SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT | base64 -d > app/service_account_play_console.json
   - export GRADLE_USER_HOME=`pwd`/.gradle
+  -
+variables:
+  SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"
+  GIT_DEPTH: "0"
+sonarcloud-check:
+  image: gradle:jre11-slim
+  cache:
+    key: "${CI_JOB_NAME}"
+    paths:
+      - .sonar/cache
+  script: gradle sonarqube
+  only:
+    - merge_requests
+    - master
+    - develop
+
 
 cache:
   key: gradlew
@@ -22,30 +38,45 @@ Lint:
   environment: Lint Test
   script:
     - ./gradlew lint
+  artifacts:
+    paths:
+      - app/build/reports/lint-results-debug.html
 
 Klint:
   stage: Test
   environment: Klint Test
   script:
     - ./gradlew lintKotlin
+  artifacts:
+    paths:
+      - app/build/reports/klint/**
 
 Detekt:
   stage: Test
   environment: Detekt Test
   script:
     - ./gradlew detekt
+  artifacts:
+    paths:
+      - app/build/reports/detekt/**
 
 Sonarqube:
   stage: Test
   environment: Sonarqube Test
   script:
     - ./gradlew build sonarqube
+  artifacts:
+    paths:
+      - app/build/sonar/**
 
 UnitAndInstrumentalTest:
   stage: Test
   environment: Unit and Instrumental Test
   script:
     - ./gradlew test
+  artifacts:
+    paths:
+      - app/build/test-results/**
 
 DebugAPK:
   stage: Build
@@ -54,7 +85,7 @@ DebugAPK:
     - ./gradlew assembleDebug
   artifacts:
     paths:
-      - app/build/outputs/apk/**
+      - app/build/outputs/apk/debug/app-debug.apk
 
 ReleaseAPK:
   stage: Build
@@ -63,7 +94,7 @@ ReleaseAPK:
     - ./gradlew assembleRelease
   artifacts:
     paths:
-      - app/build/outputs/apk/**
+      - app/build/outputs/apk/release/app-release.apk
 
 Firebase:
   stage: DeployTest
