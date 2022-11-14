@@ -14,59 +14,58 @@ cache:
   paths:
     - ~./gradle/caches
     - ~./gradle/wrapper
-
+    - .sonar/cache
 stages:
   - Test
   - Build
   - DeployTest
   - PlayStore
 
-Lint:
-  stage: Test
-  environment: Lint Test
-  script:
-    - ./gradlew lint
-  artifacts:
-    paths:
-      - app/build/reports/lint-results-debug.html
-  only:
-    - merge_requests
-    - master
-    - development
-    - release/*
-    - feature/*
-Klint:
-  stage: Test
-  environment: Klint Test
-  script:
-    - ./gradlew lintKotlin
-  artifacts:
-    paths:
-      - app/build/reports/klint/**
-  only:
-    - merge_requests
-    - master
-    - development
-    - release/*
-    - feature/*
-Detekt:
-  stage: Test
-  environment: Detekt Test
-  script:
-    - ./gradlew detekt
-  artifacts:
-    paths:
-      - app/build/reports/detekt/**
-  only:
-    - merge_requests
-    - master
-    - development
-    - release/*
-    - feature/*
+#Lint:
+#  stage: Test
+#  environment: Lint Test
+#  script:
+#    - ./gradlew lint
+#  artifacts:
+#    paths:
+#      - app/build/reports/lint-results-debug.html
+#  only:
+#    - merge_requests
+#    - master
+#    - development
+#    - release/*
+#    - feature/*
+#Klint:
+#  stage: Test
+#  environment: Klint Test
+#  script:
+#    - ./gradlew lintKotlin
+#  artifacts:
+#    paths:
+#      - app/build/reports/klint/**
+#  only:
+#    - merge_requests
+#    - master
+#    - development
+#    - release/*
+#    - feature/*
+#Detekt:
+#  stage: Test
+#  environment: Detekt Test
+#  script:
+#    - ./gradlew detekt
+#  artifacts:
+#    paths:
+#      - app/build/reports/detekt/**
+#  only:
+#    - merge_requests
+#    - master
+#    - development
+#    - release/*
+#    - feature/*
 
 Sonarqube:
   stage: Test
-  image: gradle:jre11-slim
   cache:
     key: "${CI_JOB_NAME}"
     paths:
