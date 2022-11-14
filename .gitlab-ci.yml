@@ -13,73 +13,67 @@ stages:
   - DeployTest
   - PlayStore
 
-Environment:
-  stage: Test
-  environment: test1
-  script:
-    - ./gradlew lint
+#Environment:
+#  stage: Test
+#  environment: test1
+#  script:
+#    - ./gradlew lint
 
 Lint:
   stage: Test
-  environment: test2
+  script:
+    - ./gradlew lint
+
+Klint:
+  stage: Test
+  script:
+    - ./gradlew lintKotlin
+Detekt:
+  stage: Test
+  script:
+    - ./gradlew detekt
+
+Sonarqube:
+  stage: Test
+  script:
+    - ./gradlew build sonarqube
+
+UnitAndInstrumentalTest:
+  stage: Test
   script:
     - ./gradlew test
-#
-#Klint:
-#  script:
-#    -echo "Klint"
-#Detekt:
-#  script:
-#    -echo "detek"
-#
-#Sonarqube:
-#  script:
-#    -echo "sonar"
-#
-#unitTest:
-#  script:
-#    -echo "unitTest"
-#
+
 DebugAPK:
   stage: Build
-  environment: apk
-  when: manual
   script:
-    - ./gradlew assembleRelease
+    - ./gradlew assembleDebug
   artifacts:
     paths:
       - app/build/outputs/apk/**
 
 ReleaseAPK:
   stage: Build
-  environment: apk
-  when: manual
   script:
     - ./gradlew assembleRelease
   artifacts:
     paths:
       - app/build/outputs/apk/**
+Firebase:
+  stage: DeployTest
+  script:
+    - ./gradlew assembleRelease
+    - ./gradlew appDistributionUploadRelease
 
-#apk:
-#  script:
-#    -echo "IntrumentalTest"
-#
-#
-#firebase:
-#  script:
-#    -echo "IntrumentalTest"
-#
-#
-#appcenter:
-#  script:
-#    -echo "IntrumentalTest"
-#
-#
-#internal:
-#  script:
-#    -echo "IntrumentalTest"
-#
-#
-#alpha:
-#  script:
-#    -echo "IntrumentalTest"
+
+internal:
+  stage: DeployTest
+  script:
+    - ./gradlew assembleRelease
+    - ./gradlew publishBundle
+
+
+Alpha:
+  stage: PlayStore
+  script:
+    - ./gradlew assembleRelease
+    - ./gradlew promoteArtifact --promote-track alpha
