@@ -22,60 +22,60 @@ Environment:
     - ls -lla
     - cd ..
     - ./gradlew assembleRelease
-#
-#Lint:
-#  stage: Test
-#  script:
-#    - ./gradlew lint
-#
-#Klint:
-#  stage: Test
-#  script:
-#    - ./gradlew lintKotlin
-#Detekt:
-#  stage: Test
-#  script:
-#    - ./gradlew detekt
-#
-#Sonarqube:
-#  stage: Test
-#  script:
-#    - ./gradlew build sonarqube
-#
-#UnitAndInstrumentalTest:
-#  stage: Test
-#  script:
-#    - ./gradlew test
-#
-#DebugAPK:
-#  stage: Build
-#  script:
-#    - ./gradlew assembleDebug
-#  artifacts:
-#    paths:
-#      - app/build/outputs/apk/**
-#
-#ReleaseAPK:
-#  stage: Build
-#  script:
-#    - ./gradlew assembleRelease
-#  artifacts:
-#    paths:
-#      - app/build/outputs/apk/**
-#Firebase:
-#  stage: DeployTest
-#  script:
-#    - ./gradlew assembleRelease
-#    - ./gradlew appDistributionUploadRelease
-#
-#
-#internal:
-#  stage: DeployTest
-#  script:
-#    - ./gradlew assembleRelease
-#    - ./gradlew publishBundle
-#
-#
+
+Lint:
+  stage: Test
+  script:
+    - ./gradlew lint
+
+Klint:
+  stage: Test
+  script:
+    - ./gradlew lintKotlin
+Detekt:
+  stage: Test
+  script:
+    - ./gradlew detekt
+
+Sonarqube:
+  stage: Test
+  script:
+    - ./gradlew build sonarqube
+
+UnitAndInstrumentalTest:
+  stage: Test
+  script:
+    - ./gradlew test
+
+DebugAPK:
+  stage: Build
+  script:
+    - ./gradlew assembleDebug
+  artifacts:
+    paths:
+      - app/build/outputs/apk/**
+
+ReleaseAPK:
+  stage: Build
+  script:
+    - ./gradlew assembleRelease
+  artifacts:
+    paths:
+      - app/build/outputs/apk/**
+
+Firebase:
+  stage: DeployTest
+  script:
+    - ./gradlew assembleRelease
+    - ./gradlew appDistributionUploadRelease
+
+internal:
+  stage: DeployTest
+  script:
+    - ./gradlew assembleRelease
+    - ./gradlew publishBundle
+
+
 #Alpha:
 #  stage: PlayStore
 #  script:
