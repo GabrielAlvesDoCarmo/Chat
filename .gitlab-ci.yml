@@ -125,6 +125,7 @@ Firebase:
   stage: DeployTest
   environment: App Distribution Firebase
   script:
+    - echo $FIREBASE_CREDENCIAL_FILE_APP_CHAT | base64 -d > app/firebase_service_distribuition.json
     - ./gradlew assembleRelease
     - ./gradlew appDistributionUploadRelease
   only:
@@ -136,6 +137,7 @@ InternalTest:
   stage: DeployTest
   environment: Internal Test PlayConsole
   script:
+    - echo $SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT | base64 -d > app/service_account_play_console.json
     - ./gradlew assembleRelease
     - ./gradlew publishBundle
   only:
