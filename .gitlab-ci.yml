@@ -128,6 +128,7 @@ Firebase:
     - ./gradlew assembleRelease
     - ./gradlew appDistributionUploadRelease
   only:
+    - master
     - development
     - release/*
 
@@ -138,6 +139,7 @@ InternalTest:
     - ./gradlew assembleRelease
     - ./gradlew publishBundle
   only:
+    - master
     - development
     - release/*
 Alpha:
