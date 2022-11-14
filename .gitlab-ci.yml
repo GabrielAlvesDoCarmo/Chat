@@ -8,18 +8,6 @@ before_script:
 variables:
   SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"
   GIT_DEPTH: "0"
-Test:
-  image: gradle:jre11-slim
-  cache:
-    key: "${CI_JOB_NAME}"
-    paths:
-      - .sonar/cache
-  script: gradle sonarqube
-  only:
-    - merge_requests
-    - master
-    - develop
-
 
 cache:
   key: gradlew
@@ -41,7 +29,12 @@ Lint:
   artifacts:
     paths:
       - app/build/reports/lint-results-debug.html
-
+  only:
+    - merge_requests
+    - master
+    - development
+    - release/*
+    - feature/*
 Klint:
   stage: Test
   environment: Klint Test
@@ -50,7 +43,12 @@ Klint:
   artifacts:
     paths:
       - app/build/reports/klint/**
-
+  only:
+    - merge_requests
+    - master
+    - development
+    - release/*
+    - feature/*
 Detekt:
   stage: Test
   environment: Detekt Test
@@ -59,15 +57,27 @@ Detekt:
   artifacts:
     paths:
       - app/build/reports/detekt/**
+  only:
+    - merge_requests
+    - master
+    - development
+    - release/*
+    - feature/*
 
 Sonarqube:
   stage: Test
-  environment: Sonarqube Test
-  script:
-    - ./gradlew build sonarqube
-  artifacts:
+  image: gradle:jre11-slim
+  cache:
+    key: "${CI_JOB_NAME}"
     paths:
-      - app/build/sonar/**
+      - .sonar/cache
+  script: gradle sonarqube
+  only:
+    - merge_requests
+    - master
+    - development
+    - release/*
+    - feature/*
 
 UnitAndInstrumentalTest:
   stage: Test
@@ -77,6 +87,12 @@ UnitAndInstrumentalTest:
   artifacts:
     paths:
       - app/build/test-results/**
+  only:
+    - merge_requests
+    - master
+    - development
+    - release/*
+    - feature/*
 
 DebugAPK:
   stage: Build
@@ -86,6 +102,11 @@ DebugAPK:
   artifacts:
     paths:
       - app/build/outputs/apk/debug/app-debug.apk
+  only:
+    - master
+    - development
+    - release/*
+    - feature/*
 
 ReleaseAPK:
   stage: Build
@@ -95,6 +116,11 @@ ReleaseAPK:
   artifacts:
     paths:
       - app/build/outputs/apk/release/app-release.apk
+  only:
+    - master
+    - development
+    - release/*
+    - feature/*
 
 Firebase:
   stage: DeployTest
@@ -102,6 +128,9 @@ Firebase:
   script:
     - ./gradlew assembleRelease
     - ./gradlew appDistributionUploadRelease
+  only:
+    - development
+    - release/*
 
 InternalTest:
   stage: DeployTest
@@ -109,7 +138,9 @@ InternalTest:
   script:
     - ./gradlew assembleRelease
     - ./gradlew publishBundle
-
+  only:
+    - development
+    - release/*
 Alpha:
   stage: PlayStore
   environment: PlayStore
@@ -117,3 +148,5 @@ Alpha:
   script:
     - ./gradlew assembleRelease
     - ./gradlew promoteArtifact --promote-track alpha
+  only:
+    - master
