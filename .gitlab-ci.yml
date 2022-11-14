@@ -1,6 +1,8 @@
 image: androidsdk/android-30
 before_script:
-  - export GRADLE_USER_HOME=`pwd`/.gradle
+  - echo $KEYSTORE | base64 -d app/chat_keystore.jks
+  - echo $FIREBASE_CREDENCIAL_FILE_APP_CHAT | base64 -d > app/firebase_service_distribuition.json
+  - echo $SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT | base64 -d > app/service_account_play_console.json
 cache:
   key: gradlew
   paths:
@@ -15,11 +17,7 @@ stages:
 
 Environment:
   stage: Test
-  environment: test1
   script:
-    - echo $KEYSTORE | base64 -d app/chat_keystore.jks
-    - echo $FIREBASE_CREDENCIAL_FILE_APP_CHAT | base64 -d > app/firebase_service_distribuition.json
-    - echo $SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT | base64 -d > app/service_account_play_console.json
     - cd app
     - ls -lla
     - cd ..
