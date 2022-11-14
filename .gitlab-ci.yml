@@ -15,14 +15,6 @@ stages:
   - DeployTest
   - PlayStore
 
-Environment:
-  stage: Test
-  script:
-    - cd app
-    - ls -lla
-    - cd ..
-    - ./gradlew assembleRelease
-
 Lint:
   stage: Test
   script:
@@ -74,7 +66,6 @@ internal:
   script:
     - ./gradlew assembleRelease
     - ./gradlew publishBundle
-
 
 #Alpha:
 #  stage: PlayStore
