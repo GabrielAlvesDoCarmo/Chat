@@ -8,32 +8,31 @@ cache:
     - ~./gradle/wrapper
 
 stages:
-  - lint
-  - test
-  - build
-  - firebase
-  - internal
-  - alpha
-lint:
-  stage: test
+  - Test
+  - Build
+  - DeployTest
+  - PlayStore
+
+Environment:
+  stage: Test
   environment: test1
   script:
     - ./gradlew lint
 
-test:
-  stage: test
+Lint:
+  stage: Test
   environment: test2
   script:
     - ./gradlew test
 #
-#klint:
+#Klint:
 #  script:
 #    -echo "Klint"
-#detekt:
+#Detekt:
 #  script:
 #    -echo "detek"
 #
-#sonarqube:
+#Sonarqube:
 #  script:
 #    -echo "sonar"
 #
@@ -41,12 +40,8 @@ test:
 #  script:
 #    -echo "unitTest"
 #
-#IntrumentalTest:
-#  script:
-#    -echo "IntrumentalTest"
-
-Build:
-  stage: build
+DebugAPK:
+  stage: Build
   environment: apk
   when: manual
   script:
@@ -55,6 +50,15 @@ Build:
     paths:
       - app/build/outputs/apk/**
 
+ReleaseAPK:
+  stage: Build
+  environment: apk
+  when: manual
+  script:
+    - ./gradlew assembleRelease
+  artifacts:
+    paths:
+      - app/build/outputs/apk/**
 
 #apk:
 #  script:
