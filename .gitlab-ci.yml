@@ -18,6 +18,7 @@ stages:
 Environment:
   stage: Test
   script:
+    - ls -lla
     - cd app
     - ls -lla
     - cd ..
