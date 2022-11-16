@@ -1,0 +1,100 @@
+name: Push Master
+
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: androidsdk/android-30
+    steps:
+      - uses: actions/checkout@v3
+      - name: Define appID
+        run: |
+          export APP_CHAT_ID_FIREBASE="${APP_CHAT_ID_FIREBASE}";
+          printenv
+      - name: Generate Keystore
+        env:
+          KEYSTORE: ${{secrets.KEYSTORE_PROPERTIES_FILE_APP_CHAT}}
+        run: |
+          echo "$KEYSTORE" | base64 -d > app/keystore.properties
+      - name: set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: gradle
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build with Gradle
+        run: ./gradlew build
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    container:
+      image: androidsdk/android-30
+    steps:
+      - uses: actions/checkout@v3
+      - name: set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: gradle
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Lint Test
+        run: ./gradlew lintDebug
+
+      - name: Upload html lint test Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: index.html
+          path: app/build/reports/lint-results-debug.html
+
+      - name: Ktlint Test
+        run: ./gradlew lintKotlin
+
+      - name: Detekt Test
+        run: ./gradlew detekt
+
+      - name: Sonarqube Test
+        run: ./gradlew sonarqube
+
+      - name: Unit Test
+        run: ./gradlew testDebugUnitTest
+
+      - name: Build with Gradle
+        run: ./gradlew build
+
+  apk:
+    needs: test
+    runs-on: ubuntu-latest
+    container:
+      image: androidsdk/android-30
+    steps:
+      - uses: actions/checkout@v3
+      - name: set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: gradle
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Generate Apk
+        run: ./gradlew assembleDebug
+
+      - name: Upload Apk
+        uses: actions/upload-artifact@v3
+        with:
+          name: debug.apk
+          path: app/build/outputs/**

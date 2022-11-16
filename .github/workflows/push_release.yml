@@ -1,12 +1,9 @@
-name: Push CI
+name: Push Release
 
 on:
   push:
     branches:
-      - feature/*
       - release/app-[0-9]+.[0-9]+.[0-9]
-      - master
-      - development
 jobs:
   build:
     runs-on: ubuntu-latest

@@ -1,155 +1,156 @@
-image: androidsdk/android-30
-before_script:
-  - echo $KEYSTORE | base64 -d > app/chat_keystore.jks
-  - echo $FIREBASE_CREDENCIAL_FILE_APP_CHAT | base64 -d > app/firebase_service_distribuition.json
-  - echo $SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT | base64 -d > app/service_account_play_console.json
-  - export GRADLE_USER_HOME=`pwd`/.gradle
-
-variables:
-  SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"
-  GIT_DEPTH: "0"
-
-cache:
-  key: gradlew
-  paths:
-    - ~./gradle/caches
-    - ~./gradle/wrapper
-    - .sonar/cache
-stages:
-  - Test
-  - Build
-  - DeployTest
-  - PlayStore
-
-Lint:
-  stage: Test
-  environment: Lint Test
-  script:
-    - ./gradlew lint
-  artifacts:
-    paths:
-      - app/build/reports/lint-results-debug.html
-  only:
-    - merge_requests
-    - master
-    - development
-    - release/*
-    - feature/*
-Klint:
-  stage: Test
-  environment: Klint Test
-  script:
-    - ./gradlew lintKotlin
-  artifacts:
-    paths:
-      - app/build/reports/klint/**
-  only:
-    - merge_requests
-    - master
-    - development
-    - release/*
-    - feature/*
-Detekt:
-  stage: Test
-  environment: Detekt Test
-  script:
-    - ./gradlew detekt
-  artifacts:
-    paths:
-      - app/build/reports/detekt/**
-  only:
-    - merge_requests
-    - master
-    - development
-    - release/*
-    - feature/*
-
-Sonarqube:
-  stage: Test
-  cache:
-    key: "${CI_JOB_NAME}"
-    paths:
-      - .sonar/cache
-  script: ./gradlew build sonar
-  only:
-    - merge_requests
-    - master
-    - development
-    - release/*
-    - feature/*
-
-UnitAndInstrumentalTest:
-  stage: Test
-  environment: Unit and Instrumental Test
-  script:
-    - ./gradlew test
-  artifacts:
-    paths:
-      - app/build/test-results/**
-  only:
-    - merge_requests
-    - master
-    - development
-    - release/*
-    - feature/*
-
-DebugAPK:
-  stage: Build
-  environment: Debug APk
-  script:
-    - ./gradlew assembleDebug
-  artifacts:
-    paths:
-      - app/build/outputs/apk/debug/app-debug.apk
-  only:
-    - master
-    - development
-    - release/*
-    - feature/*
-
-ReleaseAPK:
-  stage: Build
-  environment: Release Apk
-  script:
-    - ./gradlew assembleRelease
-  artifacts:
-    paths:
-      - app/build/outputs/apk/release/app-release.apk
-  only:
-    - master
-    - development
-    - release/*
-    - feature/*
-
-Firebase:
-  stage: DeployTest
-  environment: App Distribution Firebase
-  script:
-    - echo $FIREBASE_CREDENCIAL_FILE_APP_CHAT | base64 -d > app/firebase_service_distribuition.json
-    - ./gradlew assembleRelease
-    - ./gradlew appDistributionUploadRelease
-  only:
-    - master
-    - development
-    - release/*
-
-InternalTest:
-  stage: DeployTest
-  environment: Internal Test PlayConsole
-  script:
-    - echo $SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT | base64 -d > app/service_account_play_console.json
-    - ./gradlew assembleRelease
-    - ./gradlew publishBundle
-  only:
-    - master
-    - development
-    - release/*
-Alpha:
-  stage: PlayStore
-  environment: PlayStore
-  when: manual
-  script:
-    - ./gradlew assembleRelease
-    - ./gradlew promoteArtifact --promote-track alpha
-  only:
-    - master
+#image: androidsdk/android-30
+#before_script:
+#  - echo $KEYSTORE | base64 -d > app/chat_keystore.jks
+#  - echo $FIREBASE_CREDENCIAL_FILE_APP_CHAT | base64 -d > app/firebase_service_distribuition.json
+#  - echo $SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT | base64 -d > app/service_account_play_console.json
+#  - export GRADLE_USER_HOME=`pwd`/.gradle
+#
+#variables:
+#  SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"
+#  GIT_DEPTH: "0"
+#
+#cache:
+#  key: gradlew
+#  paths:
+#    - ~./gradle/caches
+#    - ~./gradle/wrapper
+#    - .sonar/cache
+#stages:
+#  - Test
+#  - Build
+#  - DeployTest
+#  - PlayStore
+#
+#Lint:
+#  stage: Test
+#  environment: Lint Test
+#  script:
+#    - ./gradlew lint
+#  artifacts:
+#    paths:
+#      - app/build/reports/lint-results-debug.html
+#  only:
+#    - merge_requests
+#    - master
+#    - development
+#    - release/*
+#    - feature/*
+#Klint:
+#  stage: Test
+#  environment: Klint Test
+#  script:
+#    - ./gradlew lintKotlin
+#  artifacts:
+#    paths:
+#      - app/build/reports/klint/**
+#  only:
+#    - merge_requests
+#    - master
+#    - development
+#    - release/*
+#    - feature/*
+#Detekt:
+#  stage: Test
+#  environment: Detekt Test
+#  script:
+#    - ./gradlew detekt
+#  artifacts:
+#    paths:
+#      - app/build/reports/detekt/**
+#  only:
+#    - merge_requests
+#    - master
+#    - development
+#    - release/*
+#    - feature/*
+#
+#Sonarqube:
+#  stage: Test
+#  environment: Sonarqube
+#  cache:
+#    key: "${CI_JOB_NAME}"
+#    paths:
+#      - .sonar/cache
+#  script: ./gradlew build sonar
+#  only:
+#    - merge_requests
+#    - master
+#    - development
+#    - release/*
+#    - feature/*
+#
+#UnitAndInstrumentalTest:
+#  stage: Test
+#  environment: Unit and Instrumental Test
+#  script:
+#    - ./gradlew test
+#  artifacts:
+#    paths:
+#      - app/build/test-results/**
+#  only:
+#    - merge_requests
+#    - master
+#    - development
+#    - release/*
+#    - feature/*
+#
+#DebugAPK:
+#  stage: Build
+#  environment: Debug APk
+#  script:
+#    - ./gradlew assembleDebug
+#  artifacts:
+#    paths:
+#      - app/build/outputs/apk/debug/app-debug.apk
+#  only:
+#    - master
+#    - development
+#    - release/*
+#    - feature/*
+#
+#ReleaseAPK:
+#  stage: Build
+#  environment: Release Apk
+#  script:
+#    - ./gradlew assembleRelease
+#  artifacts:
+#    paths:
+#      - app/build/outputs/apk/release/app-release.apk
+#  only:
+#    - master
+#    - development
+#    - release/*
+#    - feature/*
+#
+#Firebase:
+#  stage: DeployTest
+#  environment: App Distribution Firebase
+#  script:
+#    - echo $FIREBASE_CREDENCIAL_FILE_APP_CHAT | base64 -d > app/firebase_service_distribuition.json
+#    - ./gradlew assembleRelease
+#    - ./gradlew appDistributionUploadRelease
+#  only:
+#    - master
+#    - development
+#    - release/*
+#
+#InternalTest:
+#  stage: DeployTest
+#  environment: Internal Test PlayConsole
+#  script:
+#    - echo $SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT | base64 -d > app/service_account_play_console.json
+#    - ./gradlew assembleRelease
+#    - ./gradlew publishBundle
+#  only:
+#    - master
+#    - development
+#    - release/*
+#Alpha:
+#  stage: PlayStore
+#  environment: PlayStore
+#  when: manual
+#  script:
+#    - ./gradlew assembleRelease
+#    - ./gradlew promoteArtifact --promote-track alpha
+#  only:
+#    - master

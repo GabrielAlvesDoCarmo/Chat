@@ -76,7 +76,7 @@ pipelines:
               - sonar
             script:
               - echo $KEYSTORE | base64 -d > app/chat_keystore.jks
-              - ./gradlew build sonarqube
+              - ./gradlew build sonar
             artifacts:
               - app/build/sonar/**
         - step:
