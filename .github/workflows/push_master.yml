@@ -11,13 +11,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Generate Keystore
-        run: echo $KEYSTORE_PROPERTIES_FILE_APP_CHAT | base64 -d app/chat_keystore.jks
+        run: echo $KEYSTORE_PROPERTIES_FILE_APP_CHAT | base64 -d > app/chat_keystore.jks
       - name: Firebase Config
         run: echo FIREBASE_CREDENCIAL_FILE_APP_CHAT | base64 -d > app/firebase_service_distribuition.json
       - name: Generate Account Service
         run: echo $SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT | base64 -d > app/service_account_play_console.json
       - name: verificar resultado
-        run: cd app | ls -lla
       - name: Debug Version Apk
         run: ./gradlew assembleDebug
       - name: Release Version Apk
