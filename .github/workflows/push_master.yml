@@ -15,12 +15,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Generate Keystore
-        env:
-          APP_CHAT_ID_FIREBASE: ${{ secrets.APP_CHAT_ID_FIREBASE }}
-         - if: ${{ env.APP_CHAT_ID_FIREBASE != '' }}
-           run: echo 'deu certo.'
-         - if: ${{ env.APP_CHAT_ID_FIREBASE == '' }}
-           run: echo 'deu ruim'
+          env:
+            APP_CHAT_ID_FIREBASE: ${{ secrets.APP_CHAT_ID_FIREBASE }}
+           - if: ${{ env.APP_CHAT_ID_FIREBASE != '' }}
+             run: echo 'deu certo.'
+           - if: ${{ env.APP_CHAT_ID_FIREBASE == '' }}
+             run: echo 'deu ruim'
         run: |
           echo $FIREBASE_CREDENCIAL_FILE_APP_CHAT | base64 -d > app/chat_keystore.jks
           echo $FIREBASE_CREDENCIAL_FILE_APP_CHAT | base64 -d > app/firebase_service_distribuition.json
