@@ -18,7 +18,7 @@ jobs:
       - name: Generate Account Service
         run: echo $SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT | base64 -d > app/service_account_play_console.json
       - name: AppId fir
-        run: export appIdFirebaseAppChat=$APP_CHAT_ID_FIREBASE
+        run: export appIdFirebaseAppChat=${secrets.APP_CHAT_ID_FIREBASE}
       - name: Debug Version Apk
         run: ./gradlew assembleDebug
       - name: Release Version Apk
