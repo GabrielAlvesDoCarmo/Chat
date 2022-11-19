@@ -22,7 +22,7 @@ jobs:
           ls -lla
           cd ..
           printenv
-          export APP_CHAT_ID_FIREBASE=$APP_CHAT_ID_FIREBASE
+          export APP_CHAT_ID_FIREBASE=${APP_CHAT_ID_FIREBASE}
           ls -lla
           printenv
 #  test:
