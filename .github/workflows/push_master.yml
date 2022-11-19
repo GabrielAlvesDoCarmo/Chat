@@ -22,6 +22,8 @@ jobs:
           ls -lla
           cd ..
           printenv
+          echo $APP_CHAT_ID_FIREBASE | export APP_CHAT_ID_FIREBASE
+          printenv
 #  test:
 #    needs: build
 #    runs-on: ubuntu-latest
