@@ -10,9 +10,14 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment: production
     container:
       image: androidsdk/android-30
+    env:
+      APP_CHAT_ID_FIREBASE: ${{ secrets.APP_CHAT_ID_FIREBASE }}
+      - if: ${{ env.APP_CHAT_ID_FIREBASE != '' }}
+        run: echo 'deu certo.'
+      - if: ${{ env.APP_CHAT_ID_FIREBASE == '' }}
+        run: echo 'deu ruim'
     steps:
       - uses: actions/checkout@v3
       - name: Generate Keystore
@@ -23,6 +28,7 @@ jobs:
           cd app
           ls -lla
           cd ..
+
 #  test:
 #    needs: build
 #    runs-on: ubuntu-latest
