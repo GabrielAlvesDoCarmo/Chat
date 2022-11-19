@@ -1,4 +1,5 @@
 name: Push Master
+
 on:
   push:
     branches:
