@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - master
+  pull_request:
+    branches:
+      - master
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -26,8 +29,6 @@ jobs:
           echo "This is a secret value: $SECRET_VALUE"
       - name: Debug Version Apk
         run: ./gradlew assembleDebug
-      - name: Release Version Apk
-        run: ./gradlew assembleRelease
 #  test:
 #    needs: build
 #    runs-on: ubuntu-latest
