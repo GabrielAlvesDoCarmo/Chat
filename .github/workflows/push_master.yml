@@ -21,6 +21,7 @@ jobs:
           cd app
           ls -lla
           cd ..
+          printenv
 #  test:
 #    needs: build
 #    runs-on: ubuntu-latest
