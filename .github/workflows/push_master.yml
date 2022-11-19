@@ -17,6 +17,10 @@ jobs:
           echo $KEYSTORE_PROPERTIES_FILE_APP_CHAT | base64 -d > app/chat_keystore.jks
           echo $FIREBASE_CREDENCIAL_FILE_APP_CHAT | base64 -d > app/firebase_service_distribuition.json
           echo $SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT | base64 -d > app/service_account_play_console.json
+          cd app
+          ls -lla
+          cat firebase_service_distribuition.json
+          cd ..
           ./gradlew assembleDebug
           ./gradlew assembleRelease
 
