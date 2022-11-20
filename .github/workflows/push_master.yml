@@ -134,15 +134,25 @@ jobs:
           export APP_CHAT_ID_FIREBASE=$APP_ID
           echo $KEYSTORE_APP | base64 -d > app/chat_keystore.jks
 
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+
       - name: Sonarqube Test
-        run: ./gradlew build sonar
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: ./gradlew build sonarqube --info
 
       - name: Upload result Sonarqube test
         uses: actions/upload-artifact@v3
         with:
           name: sonarqube
           path: app/build/sonar/**
-
+#
 #  Intrumental-and-Unit-Test:
 #    needs:
 #      - build-release-apk

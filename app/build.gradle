@@ -65,23 +65,7 @@ android {
     //sonarcloud
     sonarqube {
         properties {
-//            bitbucket
-//            property "sonar.projectKey", "gdsdesenvolvimento-admin_chat"
-//            property "sonar.organization", "gdsdesenvolvimento-admin"
-//            gitlab
-//            property "sonar.projectKey", "gcarmodev_chat"
-//            property "sonar.organization", "gcarmodev"
-//            property "sonar.host.url", "https://sonarcloud.io"
-//            github
-            property "sonar.projectKey", "GabrielAlvesDoCarmo_Chat"
-            property "sonar.organization", "gabrielalvesdocarmo"
-            property "sonar.host.url", "https://sonarcloud.io"
-            property "sonar.scm.provider", "git"
-        }
-    }
-    //local
-//    sonarqube {
-//        properties {
+//            LOCAL
 //            property "sonar.projectName", "Chat"
 //            property "sonar.projectKey", "Chat"
 //            property "sonar.host.url", "http://localhost:9000"
@@ -89,8 +73,23 @@ android {
 //            property "sonar.sources", "D:\\AndroidProjects\\Kotlin\\Chat\\app\\src\\main"
 //            property "sonar.login", "admin"
 //            property "sonar.password", "G@404trt"
-//        }
-//    }
+
+//            BITBUCKET
+//            property "sonar.projectKey", "gdsdesenvolvimento-admin_chat"
+//            property "sonar.organization", "gdsdesenvolvimento-admin"
+
+//            GITLAB
+//            property "sonar.projectKey", "gcarmodev_chat"
+//            property "sonar.organization", "gcarmodev"
+//            property "sonar.host.url", "https://sonarcloud.io"
+
+//            github
+            property "sonar.projectKey", "GabrielAlvesDoCarmo_Chat"
+            property "sonar.organization", "gabrielalvesdocarmo"
+            property "sonar.host.url", "https://sonarcloud.io"
+            property "sonar.language", "kotlin"
+        }
+    }
 }
 play {
     serviceAccountCredentials.set(file(System.getenv("SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT") ?: "service_account_play_console.json"))
