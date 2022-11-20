@@ -14,11 +14,14 @@ jobs:
       - uses: actions/checkout@v3
       - name: Generate Keystore
         env :
+          APP_CHAT_ID_FIREBASE: ${{secrets.APP_CHAT_ID_FIREBASE}}
           KEYSTORE_APP: ${{secrets.KEYSTORE}}
+          FIREBASE_APP: ${{secrets.FIREBASE}}
+          SERVICE_ACCOUNT_APP: ${{secrets.SERVICE_ACCOUNT}}
         run: |
           echo $KEYSTORE_APP | base64 -d > app/chat_keystore.jks
-          echo $FIREBASE | base64 -d > app/firebase_service_distribuition.json
-          echo $SERVICE_ACCOUNT | base64 -d > app/service_account_play_console.json
+          echo $FIREBASE_APP | base64 -d > app/firebase_service_distribuition.json
+          echo $SERVICE_ACCOUNT_APP | base64 -d > app/service_account_play_console.json
       - name: Build App
         run: ./gradlew assembleRelease
 

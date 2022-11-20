@@ -47,7 +47,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
             firebaseAppDistribution {
-                appId = System.getenv("APP_CHAT_ID_FIREBASE") ?: "1:1089203898727:android:3cdf71036c7d5e3f4c07c2"
+                appId = System.getenv("APP_CHAT_ID_FIREBASE") ?: appIdFirebaseAppChat
                 artifactType = "APK"
                 releaseNotesFile = "app/releasenotes.txt"
                 groups = "Testers"
