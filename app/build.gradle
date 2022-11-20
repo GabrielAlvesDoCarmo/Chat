@@ -51,7 +51,7 @@ android {
                 artifactType = "APK"
                 releaseNotesFile = "app/releasenotes.txt"
                 groups = "Testers"
-                serviceCredentialsFile = System.getenv("FIREBASE_CREDENCIAL_FILE_APP_CHAT") ?: "firebase_service_distribuition.json"
+                serviceCredentialsFile = System.getenv("FIREBASE_CREDENCIAL_FILE_APP_CHAT") ?: "app/firebase_service_distribuition.json"
             }
         }
     }
@@ -92,7 +92,7 @@ android {
     }
 }
 play {
-    serviceAccountCredentials.set(file(System.getenv("SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT") ?: "app/service_account_play_console.json"))
+    serviceAccountCredentials.set(file(System.getenv("SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT") ?: "service_account_play_console.json"))
 }
 dependencies {
 
