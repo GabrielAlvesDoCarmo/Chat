@@ -10,7 +10,7 @@ on:
 jobs:
   build-debug-apk:
     runs-on: ubuntu-latest
-    environment: APK
+    environment: BUILD
     container:
       image: androidsdk/android-30
     steps:
@@ -32,7 +32,7 @@ jobs:
 
   build-release-apk:
     runs-on: ubuntu-latest
-    environment: APK
+    environment: BUILD
     container:
       image: androidsdk/android-30
     steps:
@@ -126,6 +126,13 @@ jobs:
       image: androidsdk/android-30
     steps:
       - uses: actions/checkout@v3
+      - name: Setup Environment
+        env:
+          APP_ID: ${{secrets.APP_CHAT_ID_FIREBASE}}
+          KEYSTORE_APP: ${{secrets.KEYSTORE}}
+        run: |
+          export APP_CHAT_ID_FIREBASE=$APP_ID
+          echo $KEYSTORE_APP | base64 -d > app/chat_keystore.jks
 
       - name: Sonarqube Test
         run: ./gradlew build sonar
@@ -146,6 +153,14 @@ jobs:
       image: androidsdk/android-30
     steps:
       - uses: actions/checkout@v3
+      - name: Setup Environment
+        env:
+          APP_ID: ${{secrets.APP_CHAT_ID_FIREBASE}}
+          KEYSTORE_APP: ${{secrets.KEYSTORE}}
+        run: |
+          export APP_CHAT_ID_FIREBASE=$APP_ID
+          echo $KEYSTORE_APP | base64 -d > app/chat_keystore.jks
+
       - name: Unit Test
         run: ./gradlew test
 
