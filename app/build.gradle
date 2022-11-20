@@ -76,6 +76,7 @@ android {
             property "sonar.projectKey", "GabrielAlvesDoCarmo_Chat"
             property "sonar.organization", "gabrielalvesdocarmo"
             property "sonar.host.url", "https://sonarcloud.io"
+            property "sonar.scm.provider", "git"
         }
     }
     //local
