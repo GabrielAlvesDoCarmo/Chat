@@ -8,7 +8,7 @@ on:
     branches:
       - master
 jobs:
-  build-release-apk:
+  build-debug-apk:
     runs-on: ubuntu-latest
     environment: debug-apk
     container:
@@ -30,7 +30,7 @@ jobs:
           name: debug.apk
           path: app/build/outputs/apk/debug/app-debug.apk
 
-  build-debug-apk:
+  build-release-apk:
     runs-on: ubuntu-latest
     environment: release-apk
     container:
@@ -48,7 +48,6 @@ jobs:
           echo $KEYSTORE_APP | base64 -d > app/chat_keystore.jks
           echo $FIREBASE_APP | base64 -d > app/firebase_service_distribuition.json
           echo $SERVICE_ACCOUNT_APP | base64 -d > app/service_account_play_console.json
-          -
       - name: Build Release Apk
         run: ./gradlew assembleRelease
 
@@ -58,26 +57,17 @@ jobs:
           name: release.apk
           path: app/build/outputs/apk/release/app-release.apk
 
-  test-code:
+  lint-test:
     needs:
       - build-release-apk
       - build-debug-apk
     runs-on: ubuntu-latest
+    environment: lint-test
     container:
       image: androidsdk/android-30
+
     steps:
       - uses: actions/checkout@v3
-      - name: Setup Environment
-        env :
-          APP_ID: ${{secrets.APP_CHAT_ID_FIREBASE}}
-          KEYSTORE_APP: ${{secrets.KEYSTORE}}
-          FIREBASE_APP: ${{secrets.FIREBASE}}
-          SERVICE_ACCOUNT_APP: ${{secrets.SERVICE_ACCOUNT}}
-        run: |
-          export APP_CHAT_ID_FIREBASE=$APP_ID
-          echo $KEYSTORE_APP | base64 -d > app/chat_keystore.jks
-          echo $FIREBASE_APP | base64 -d > app/firebase_service_distribuition.json
-          echo $SERVICE_ACCOUNT_APP | base64 -d > app/service_account_play_console.json
 
       - name: Lint Test
         run: ./gradlew lint
@@ -88,6 +78,16 @@ jobs:
           name: index.html
           path: app/build/reports/lint-results-debug.html
 
+  Ktlint-test:
+    needs:
+      - build-release-apk
+      - build-debug-apk
+    runs-on: ubuntu-latest
+    environment: Ktlint-test
+    container:
+      image: androidsdk/android-30
+    steps:
+      - uses: actions/checkout@v3
       - name: Ktlint Test
         run: ./gradlew lintKotlin
 
@@ -97,6 +97,16 @@ jobs:
           name: Ktlint
           path: app/build/reports/ktlint/**
 
+  Detekt-test:
+    needs:
+      - build-release-apk
+      - build-debug-apk
+    runs-on: ubuntu-latest
+    environment: Detekt-test
+    container:
+      image: androidsdk/android-30
+    steps:
+      - uses: actions/checkout@v3
       - name: Detekt Test
         run: ./gradlew detekt
 
@@ -105,6 +115,17 @@ jobs:
         with:
           name: ResultDetekt
           path: app/build/reports/detekt/detekt/detekt.html
+
+  Sonar-test:
+    needs:
+      - build-release-apk
+      - build-debug-apk
+    runs-on: ubuntu-latest
+    environment: Sonar-test
+    container:
+      image: androidsdk/android-30
+    steps:
+      - uses: actions/checkout@v3
 
       - name: Sonarqube Test
         run: ./gradlew sonar
@@ -115,6 +136,16 @@ jobs:
           name: sonarqube
           path: app/build/sonar/**
 
+  Intrumental-and-Unit-Test:
+    needs:
+      - build-release-apk
+      - build-debug-apk
+    runs-on: ubuntu-latest
+    environment: Ktlint-test
+    container:
+      image: androidsdk/android-30
+    steps:
+      - uses: actions/checkout@v3
       - name: Unit Test
         run: ./gradlew test
 
