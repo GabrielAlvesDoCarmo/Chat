@@ -135,7 +135,7 @@ jobs:
           echo $KEYSTORE_APP | base64 -d > app/chat_keystore.jks
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v1
+        uses: actions/cache@v2.1.5
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
@@ -180,7 +180,7 @@ jobs:
           name: index.html
           path: app/build/reports/tests/testDebugUnitTest/index.html
 
-  App-Distribution-PlayStore:
+  App-Distribution-Firebase:
     needs:
       - Lint
       - Ktlint
@@ -208,7 +208,7 @@ jobs:
       - name: Deploy firebase
         run: ./gradlew assembleRelease appDistributionUploadRelease
 
-  Internal-Test-Firebase:
+  Internal-Test-PlayStore:
     needs:
       - Lint
       - Ktlint
@@ -233,5 +233,5 @@ jobs:
           echo $FIREBASE_APP | base64 -d > app/firebase_service_distribuition.json
           echo $SERVICE_ACCOUNT_APP | base64 -d > app/service_account_play_console.json
 
-      - name: Deploy firebase
+      - name: Deploy Internal Test PlayStore
         run: ./gradlew assembleRelease publishBundle
