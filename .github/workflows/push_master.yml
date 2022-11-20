@@ -46,12 +46,14 @@ jobs:
           path: app/build/outputs/apk/release/app-release.apk
 
   test-code:
-    needs: build
+    needs: build-apk
     runs-on: ubuntu-latest
     container:
       image: androidsdk/android-30
     steps:
       - uses: actions/checkout@v3
+
+
       - name: Lint Test
         run: ./gradlew lint
 
