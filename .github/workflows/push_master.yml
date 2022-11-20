@@ -204,6 +204,7 @@ jobs:
           echo $KEYSTORE_APP | base64 -d > app/chat_keystore.jks
           echo $FIREBASE_APP | base64 -d > app/firebase_service_distribuition.json
           echo $SERVICE_ACCOUNT_APP | base64 -d > app/service_account_play_console.json
+          export SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT=app/service_account_play_console.json
 
       - name: Deploy firebase
         run: ./gradlew assembleRelease appDistributionUploadRelease
