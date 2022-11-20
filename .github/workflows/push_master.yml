@@ -141,7 +141,7 @@ jobs:
       - build-release-apk
       - build-debug-apk
     runs-on: ubuntu-latest
-    environment: Ktlint-test
+    environment: Intrumental-and-Unit-Test
     container:
       image: androidsdk/android-30
     steps:
