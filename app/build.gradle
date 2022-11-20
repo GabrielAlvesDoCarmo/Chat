@@ -62,17 +62,23 @@ android {
     kotlinOptions {
         jvmTarget = "$rootProject.ext.jvmTarget"
     }
+    //sonarcloud
     sonarqube {
         properties {
 //            bitbucket
 //            property "sonar.projectKey", "gdsdesenvolvimento-admin_chat"
 //            property "sonar.organization", "gdsdesenvolvimento-admin"
 //            gitlab
-            property "sonar.projectKey", "gcarmodev_chat"
-            property "sonar.organization", "gcarmodev"
+//            property "sonar.projectKey", "gcarmodev_chat"
+//            property "sonar.organization", "gcarmodev"
+//            property "sonar.host.url", "https://sonarcloud.io"
+//            github
+            property "sonar.projectKey", "GabrielAlvesDoCarmo_Chat"
+            property "sonar.organization", "gabrielalvesdocarmo"
             property "sonar.host.url", "https://sonarcloud.io"
         }
     }
+    //local
 //    sonarqube {
 //        properties {
 //            property "sonar.projectName", "Chat"
