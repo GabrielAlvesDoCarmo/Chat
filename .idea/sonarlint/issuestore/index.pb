@@ -8,3 +8,13 @@ d
 :
 
 .gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
+X
+(gradle/wrapper/gradle-wrapper.properties,f\b\fbe448ebfc3eb2d4e308f6b8b043666f5b57235e
+A
+gradle.properties,2\a\2afbb999f001938c88fa43fc2ef52abf0f8213e4
+G
+app/keystore.properties,b\a\ba89289058db9ad8295f90568c424d2f58a4c138
+@
+app/build.gradle,f\4\f4a01d6a4fcb971362ec00a83903fd3902f52164
+?
+versions.gradle,a\8\a8e804beb3174b2650db161f81257656db32888b
