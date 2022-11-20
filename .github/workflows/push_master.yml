@@ -135,7 +135,7 @@ jobs:
           echo $KEYSTORE_APP | base64 -d > app/chat_keystore.jks
 
       - name: Sonarqube Test
-        run: ./gradlew build sonar
+        run: ./gradlew build sonarqube
 
       - name: Upload result Sonarqube test
         uses: actions/upload-artifact@v3
@@ -170,7 +170,7 @@ jobs:
           name: index.html
           path: app/build/reports/tests/testDebugUnitTest/index.html
 
-  App-Distribution:
+  App-Distribution-PlayStore:
     needs:
       - Lint
       - Ktlint
@@ -198,7 +198,7 @@ jobs:
       - name: Deploy firebase
         run: ./gradlew assembleRelease appDistributionUploadRelease
 
-  Internal-Test:
+  Internal-Test-Firebase:
     needs:
       - Lint
       - Ktlint
