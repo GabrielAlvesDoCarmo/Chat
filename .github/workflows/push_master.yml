@@ -13,10 +13,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Generate Keystore
+        env :
+          KEYSTORE_APP: ${{secrets.KEYSTORE}}
         run: |
-          echo $KEYSTORE
-          echo $KEYSTORE | base64 -d > app/chat_keystore.jks
-          echo $FIREBASE
+          echo KEYSTORE_APP | base64 -d > app/chat_keystore.jks
           echo $FIREBASE | base64 -d > app/firebase_service_distribuition.json
           echo $SERVICE_ACCOUNT | base64 -d > app/service_account_play_console.json
       - name: Build App
