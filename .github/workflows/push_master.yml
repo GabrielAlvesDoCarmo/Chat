@@ -32,7 +32,6 @@ jobs:
 
   build-debug-apk:
     runs-on: ubuntu-latest
-      environment: production
       container:
         image: androidsdk/android-30
       steps:
