@@ -15,7 +15,7 @@ jobs:
       image: androidsdk/android-30
     steps:
       - uses: actions/checkout@v3
-      - name: Generate Keystore
+      - name: Setup Environment
         env :
           APP_ID: ${{secrets.APP_CHAT_ID_FIREBASE}}
           KEYSTORE_APP: ${{secrets.KEYSTORE}}
@@ -26,8 +26,24 @@ jobs:
           echo $KEYSTORE_APP | base64 -d > app/chat_keystore.jks
           echo $FIREBASE_APP | base64 -d > app/firebase_service_distribuition.json
           echo $SERVICE_ACCOUNT_APP | base64 -d > app/service_account_play_console.json
-      - name: Build App
+
+      - name: Build Debug Apk
+        run: ./gradlew assembleDebug
+
+      - name: Upload Apk Debug
+        uses: actions/upload-artifact@v3
+        with:
+          name: debug.apk
+          path: app/build/outputs/apk/debug/app-debug.apk
+
+      - name: Build Debug Apk
         run: ./gradlew assembleRelease
+
+      - name: Upload Apk Release
+        uses: actions/upload-artifact@v3
+        with:
+          name: debug.apk
+          path: app/build/outputs/apk/release/app-release.apk
 
 #  test:
 #    needs: build
