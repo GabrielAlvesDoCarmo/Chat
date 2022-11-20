@@ -59,7 +59,9 @@ jobs:
           path: app/build/outputs/apk/release/app-release.apk
 
   test-code:
-    needs: build-apk
+    needs:
+      - build-release-apk
+      - build-debug-apk
     runs-on: ubuntu-latest
     container:
       image: androidsdk/android-30
