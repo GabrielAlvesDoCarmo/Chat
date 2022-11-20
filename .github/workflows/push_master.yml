@@ -10,7 +10,7 @@ on:
 jobs:
   debug-apk:
     runs-on: ubuntu-latest
-    environment: production
+    environment: debugApk
     container:
       image: androidsdk/android-30
     steps:
@@ -37,7 +37,7 @@ jobs:
           path: app/build/outputs/apk/debug/app-debug.apk
   release-apk:
     runs-on: ubuntu-latest
-      environment: production
+      environment: releaseApk
       container:
         image: androidsdk/android-30
       steps:
