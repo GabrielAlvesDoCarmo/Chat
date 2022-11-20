@@ -8,7 +8,7 @@ on:
     branches:
       - master
 jobs:
-  build-apk:
+  debug-apk:
     runs-on: ubuntu-latest
     environment: production
     container:
@@ -35,15 +35,33 @@ jobs:
         with:
           name: debug.apk
           path: app/build/outputs/apk/debug/app-debug.apk
+  release-apk:
+    runs-on: ubuntu-latest
+      environment: production
+      container:
+        image: androidsdk/android-30
+      steps:
+        - uses: actions/checkout@v3
+        - name: Setup Environment
+          env :
+            APP_ID: ${{secrets.APP_CHAT_ID_FIREBASE}}
+            KEYSTORE_APP: ${{secrets.KEYSTORE}}
+            FIREBASE_APP: ${{secrets.FIREBASE}}
+            SERVICE_ACCOUNT_APP: ${{secrets.SERVICE_ACCOUNT}}
+          run: |
+            export APP_CHAT_ID_FIREBASE=$APP_ID
+            echo $KEYSTORE_APP | base64 -d > app/chat_keystore.jks
+            echo $FIREBASE_APP | base64 -d > app/firebase_service_distribuition.json
+            echo $SERVICE_ACCOUNT_APP | base64 -d > app/service_account_play_console.json
 
-      - name: Build Debug Apk
-        run: ./gradlew assembleRelease
+        - name: Build Release Apk
+          run: ./gradlew assembleRelease
 
-      - name: Upload Apk Release
-        uses: actions/upload-artifact@v3
-        with:
-          name: debug.apk
-          path: app/build/outputs/apk/release/app-release.apk
+        - name: Upload Apk Release
+          uses: actions/upload-artifact@v3
+          with:
+            name: debug.apk
+            path: app/build/outputs/apk/release/app-release.apk
 
   test-code:
     needs: build-apk
@@ -52,7 +70,17 @@ jobs:
       image: androidsdk/android-30
     steps:
       - uses: actions/checkout@v3
-
+      - name: Setup Environment
+        env :
+          APP_ID: ${{secrets.APP_CHAT_ID_FIREBASE}}
+          KEYSTORE_APP: ${{secrets.KEYSTORE}}
+          FIREBASE_APP: ${{secrets.FIREBASE}}
+          SERVICE_ACCOUNT_APP: ${{secrets.SERVICE_ACCOUNT}}
+        run: |
+          export APP_CHAT_ID_FIREBASE=$APP_ID
+          echo $KEYSTORE_APP | base64 -d > app/chat_keystore.jks
+          echo $FIREBASE_APP | base64 -d > app/firebase_service_distribuition.json
+          echo $SERVICE_ACCOUNT_APP | base64 -d > app/service_account_play_console.json
 
       - name: Lint Test
         run: ./gradlew lint
