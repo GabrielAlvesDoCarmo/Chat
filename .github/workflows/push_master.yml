@@ -10,7 +10,7 @@ on:
 jobs:
   build-debug-apk:
     runs-on: ubuntu-latest
-    environment: debug-apk
+    environment: APK
     container:
       image: androidsdk/android-30
     steps:
@@ -32,7 +32,7 @@ jobs:
 
   build-release-apk:
     runs-on: ubuntu-latest
-    environment: release-apk
+    environment: APK
     container:
       image: androidsdk/android-30
     steps:
@@ -62,7 +62,7 @@ jobs:
       - build-release-apk
       - build-debug-apk
     runs-on: ubuntu-latest
-    environment: lint-test
+    environment: TEST
     container:
       image: androidsdk/android-30
 
@@ -83,7 +83,7 @@ jobs:
       - build-release-apk
       - build-debug-apk
     runs-on: ubuntu-latest
-    environment: Ktlint-test
+    environment: TEST
     container:
       image: androidsdk/android-30
     steps:
@@ -102,7 +102,7 @@ jobs:
       - build-release-apk
       - build-debug-apk
     runs-on: ubuntu-latest
-    environment: Detekt-test
+    environment: TEST
     container:
       image: androidsdk/android-30
     steps:
@@ -121,7 +121,7 @@ jobs:
       - build-release-apk
       - build-debug-apk
     runs-on: ubuntu-latest
-    environment: Sonar-test
+    environment: TEST
     container:
       image: androidsdk/android-30
     steps:
@@ -141,7 +141,7 @@ jobs:
       - build-release-apk
       - build-debug-apk
     runs-on: ubuntu-latest
-    environment: Intrumental-and-Unit-Test
+    environment: TEST
     container:
       image: androidsdk/android-30
     steps:
@@ -163,7 +163,7 @@ jobs:
       - Sonar
       - Intrumental-and-Unit-Test
     runs-on: ubuntu-latest
-    environment: Firebase
+    environment: DEPLOY
     container:
       image: androidsdk/android-30
     steps:
@@ -191,7 +191,7 @@ jobs:
       - Sonar
       - Intrumental-and-Unit-Test
     runs-on: ubuntu-latest
-    environment: PlayConsole
+    environment: DEPLOY
     container:
       image: androidsdk/android-30
     steps:
