@@ -1,10 +1,10 @@
 ext {
     //base app default
-    versionCode = 39
+    versionCode = 40
     minSdk = 27
     targetSdk = 32
     compileSdk = 32
-    versionName = "0.0.39"
+    versionName = "0.0.40"
     jvmTarget = '11'
     core_ktx = "1.7.0"
     appcompat = "1.5.1"

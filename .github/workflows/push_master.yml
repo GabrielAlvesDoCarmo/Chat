@@ -57,7 +57,7 @@ jobs:
           name: release.apk
           path: app/build/outputs/apk/release/app-release.apk
 
-  lint-test:
+  Lint:
     needs:
       - build-release-apk
       - build-debug-apk
@@ -78,7 +78,7 @@ jobs:
           name: index.html
           path: app/build/reports/lint-results-debug.html
 
-  Ktlint-test:
+  Ktlint:
     needs:
       - build-release-apk
       - build-debug-apk
@@ -97,7 +97,7 @@ jobs:
           name: Ktlint
           path: app/build/reports/ktlint/**
 
-  Detekt-test:
+  Detekt:
     needs:
       - build-release-apk
       - build-debug-apk
@@ -116,7 +116,7 @@ jobs:
           name: ResultDetekt
           path: app/build/reports/detekt/detekt/detekt.html
 
-  Sonar-test:
+  Sonar:
     needs:
       - build-release-apk
       - build-debug-apk
@@ -155,30 +155,58 @@ jobs:
           name: index.html
           path: app/build/reports/tests/testDebugUnitTest/index.html
 
+  App-Distribution:
+    needs:
+      - Lint
+      - Ktlint
+      - Detekt
+      - Sonar
+      - Intrumental-and-Unit-Test
+    runs-on: ubuntu-latest
+    environment: Firebase
+    container:
+      image: androidsdk/android-30
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Environment
+        env:
+          APP_ID: ${{secrets.APP_CHAT_ID_FIREBASE}}
+          KEYSTORE_APP: ${{secrets.KEYSTORE}}
+          FIREBASE_APP: ${{secrets.FIREBASE}}
+          SERVICE_ACCOUNT_APP: ${{secrets.SERVICE_ACCOUNT}}
+        run: |
+          export APP_CHAT_ID_FIREBASE=$APP_ID
+          echo $KEYSTORE_APP | base64 -d > app/chat_keystore.jks
+          echo $FIREBASE_APP | base64 -d > app/firebase_service_distribuition.json
+          echo $SERVICE_ACCOUNT_APP | base64 -d > app/service_account_play_console.json
 
+      - name: Deploy firebase
+        run: ./gradlew assembleRelease appDistributionUploadRelease
 
-#  apk:
-#    needs: test
-#    runs-on: ubuntu-latest
-#    container:
-#      image: androidsdk/android-30
-#    steps:
-#      - uses: actions/checkout@v3
-#      - name: set up JDK 11
-#        uses: actions/setup-java@v3
-#        with:
-#          java-version: '11'
-#          distribution: 'temurin'
-#          cache: gradle
-#
-#      - name: Grant execute permission for gradlew
-#        run: chmod +x gradlew
-#
-#      - name: Generate Apk
-#        run: ./gradlew assembleDebug
-#
-#      - name: Upload Apk
-#        uses: actions/upload-artifact@v3
-#        with:
-#          name: debug.apk
-#          path: app/build/outputs/**
+  Internal-Test:
+    needs:
+      - Lint
+      - Ktlint
+      - Detekt
+      - Sonar
+      - Intrumental-and-Unit-Test
+    runs-on: ubuntu-latest
+    environment: PlayConsole
+    container:
+      image: androidsdk/android-30
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Environment
+        env:
+          APP_ID: ${{secrets.APP_CHAT_ID_FIREBASE}}
+          KEYSTORE_APP: ${{secrets.KEYSTORE}}
+          FIREBASE_APP: ${{secrets.FIREBASE}}
+          SERVICE_ACCOUNT_APP: ${{secrets.SERVICE_ACCOUNT}}
+        run: |
+          export APP_CHAT_ID_FIREBASE=$APP_ID
+          echo $KEYSTORE_APP | base64 -d > app/chat_keystore.jks
+          echo $FIREBASE_APP | base64 -d > app/firebase_service_distribuition.json
+          echo $SERVICE_ACCOUNT_APP | base64 -d > app/service_account_play_console.json
+
+      - name: Deploy firebase
+        run: ./gradlew assembleRelease publishBundle
