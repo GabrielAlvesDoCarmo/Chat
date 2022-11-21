@@ -19,7 +19,7 @@ ext {
     kapt_hilt = "2.44"
 
     //room
-    room_version = "2.4.3"
+    room_version = "2.4.1"
 
     //viewmodel delegate
     fragment_ktx = "1.5.4"
