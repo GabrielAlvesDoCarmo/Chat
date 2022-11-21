@@ -180,3 +180,31 @@ jobs:
         with:
           name: index.html
           path: app/build/reports/tests/testDebugUnitTest/index.html
+  App-Distribution-Firebase:
+    needs:
+      - Lint
+      - Ktlint
+      - Detekt
+      - Sonar
+      - Intrumental-and-Unit-Test
+    runs-on: ubuntu-latest
+    environment: DEPLOY-DEVELOPMENT
+    container:
+      image: androidsdk/android-30
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Environment
+        env:
+          APP_ID: ${{secrets.APP_CHAT_ID_FIREBASE}}
+          KEYSTORE_APP: ${{secrets.KEYSTORE}}
+          FIREBASE_APP: ${{secrets.FIREBASE}}
+          SERVICE_ACCOUNT_APP: ${{secrets.SERVICE_ACCOUNT}}
+        run: |
+          export APP_CHAT_ID_FIREBASE=$APP_ID
+          echo $KEYSTORE_APP | base64 -d > app/chat_keystore.jks
+          echo $FIREBASE_APP | base64 -d > app/firebase_service_distribuition.json
+          echo $SERVICE_ACCOUNT_APP | base64 -d > app/service_account_play_console.json
+          export SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT=app/service_account_play_console.json
+
+      - name: Deploy firebase
+        run: ./gradlew assembleRelease appDistributionUploadRelease
