@@ -1,12 +1,27 @@
 package com.gdsdevtec.chat.ui.activity.splash
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import com.gdsdevtec.chat.R
+import android.annotation.SuppressLint
+import android.view.View
+import com.gdsdevtec.chat.databinding.ActivitySplashBinding
+import com.gdsdevtec.chat.ui.activity.core.BaseActivity
+import com.gdsdevtec.chat.ui.activity.main.MainActivity
+import com.gdsdevtec.chat.util.constants.ActivityConstants
+import com.gdsdevtec.chat.util.extensions.nextScreen
+import com.gdsdevtec.chat.util.extensions.delaySplash
 
-class SplashActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_splash)
+@SuppressLint("CustomSplashScreen")
+class SplashActivity : BaseActivity<ActivitySplashBinding>() {
+    override fun activityBind(): ActivitySplashBinding {
+        return ActivitySplashBinding.inflate(layoutInflater)
+    }
+
+    override fun viewRoot(): View {
+        return activityBind().root
+    }
+
+    override fun onCreateCode() {
+        delaySplash(ActivityConstants.TIME_DELAY) {
+            nextScreen(MainActivity())
+        }
     }
 }
