@@ -189,7 +189,7 @@ jobs:
       - Sonar
       - Intrumental-and-Unit-Test
     runs-on: ubuntu-latest
-    environment: DEPLOY
+    environment: DEPLOY-RELEASE
     container:
       image: androidsdk/android-30
     steps:
@@ -218,7 +218,7 @@ jobs:
       - Sonar
       - Intrumental-and-Unit-Test
     runs-on: ubuntu-latest
-    environment: DEPLOY
+    environment: DEPLOY-RELEASE
     container:
       image: androidsdk/android-30
     steps:
