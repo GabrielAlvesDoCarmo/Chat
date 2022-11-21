@@ -33,7 +33,7 @@ jobs:
 
   build-release-apk-development:
     runs-on: ubuntu-latest
-    environment: BUILD
+    environment: BUILD-DEVELOPMENT
     container:
       image: androidsdk/android-30
     steps:

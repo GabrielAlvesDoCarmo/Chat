@@ -32,7 +32,7 @@ jobs:
 
   build-release-apk-feature:
     runs-on: ubuntu-latest
-    environment: BUILD
+    environment: BUILD-FEATURE
     container:
       image: androidsdk/android-30
     steps:
