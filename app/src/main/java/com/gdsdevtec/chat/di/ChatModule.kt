@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
+
 /**
  * class modulo de injecao do hilt
  */
