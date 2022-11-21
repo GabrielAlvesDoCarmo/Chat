@@ -19,19 +19,6 @@ pipeline {
                 git branch: branch, credentialsId: 'chat', url: url
             }
         }
-
-        /* stage('Lint') {
-            steps {
-                sh "./gradlew lint"
-            }
-        }
-
-        stage('Test') {
-            steps {
-                sh "./gradlew test --stacktrace"
-            }
-        } */
-
         // Manage Jenkins > Credentials > Add > Secret file or Secret Text
         stage('Credentials') {
             steps {
@@ -53,9 +40,30 @@ pipeline {
             }
         }
 
-        stage('Build') {
-            steps {
-                sh "./gradlew clean assembleRelease"
+        stage('Build APK') {
+            parallel{
+                steps {
+                    sh "./gradlew clean assembleDebug"
+                }
+                steps {
+                    sh "./gradlew clean assembleRelease"
+                }
+            }
+        }
+        stage('TEST') {
+            parallel{
+                steps {
+                    sh "./gradlew lint"
+                }
+                steps {
+                    sh "./gradlew lintKotlin"
+                }
+                steps {
+                    sh "./gradlew detekt"
+                }
+                steps {
+                    sh "./gradlew test"
+                }
             }
         }
 
