@@ -63,7 +63,7 @@ jobs:
       - build-release-apk-feature
       - build-debug-apk-feature
     runs-on: ubuntu-latest
-    environment: TEST_FEATURE
+    environment: TEST-FEATURE
     container:
       image: androidsdk/android-30
 
@@ -84,7 +84,7 @@ jobs:
       - build-release-apk-feature
       - build-debug-apk-feature
     runs-on: ubuntu-latest
-    environment: TEST_FEATURE
+    environment: TEST-FEATURE
     container:
       image: androidsdk/android-30
     steps:
@@ -103,7 +103,7 @@ jobs:
       - build-release-apk-feature
       - build-debug-apk-feature
     runs-on: ubuntu-latest
-    environment: TEST_FEATURE
+    environment: TEST-FEATURE
     container:
       image: androidsdk/android-30
     steps:
@@ -122,7 +122,7 @@ jobs:
       - build-release-apk-feature
       - build-debug-apk-feature
     runs-on: ubuntu-latest
-    environment: TEST_FEATURE
+    environment: TEST-FEATURE
     container:
       image: androidsdk/android-30
     steps:
@@ -159,7 +159,7 @@ jobs:
       - build-release-apk-feature
       - build-debug-apk-feature
     runs-on: ubuntu-latest
-    environment: TEST_FEATURE
+    environment: TEST-FEATURE
     container:
       image: androidsdk/android-30
     steps:

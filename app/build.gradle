@@ -7,6 +7,8 @@ plugins {
     id 'org.sonarqube'
     id 'io.gitlab.arturbosch.detekt'
     id "org.jmailen.kotlinter"
+    id 'kotlin-kapt'
+    id 'com.google.dagger.hilt.android'
 }
 def keystorePropertiesFile = rootProject.file("app/keystore.properties")
 def keystoreProperties = new Properties()
@@ -90,6 +92,9 @@ android {
             property "sonar.language", "kotlin"
         }
     }
+    buildFeatures {
+        viewBinding true
+    }
 }
 play {
     serviceAccountCredentials.set(file(System.getenv("SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT") ?: "service_account_play_console.json"))
@@ -103,4 +108,16 @@ dependencies {
     testImplementation "junit:junit:$rootProject.ext.testImplementation_junit"
     androidTestImplementation "androidx.test.ext:junit:$rootProject.ext.androidTestImplementation_junit"
     androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.ext.androidTestImplementation_espresso_core"
+    //hilt
+    implementation "com.google.dagger:hilt-android:$rootProject.ext.implementation_hilt"
+    kapt "com.google.dagger:hilt-compiler:$rootProject.ext.kapt_hilt"
+
+    //room
+    implementation "androidx.room:room-runtime:$rootProject.ext.room_version"
+    annotationProcessor "androidx.room:room-compiler:$rootProject.ext.room_version"
+    testImplementation "androidx.room:room-testing:$rootProject.ext.room_version"
+    //viewmodel delegate
+    implementation "androidx.fragment:fragment-ktx:$rootProject.ext.fragment_ktx"
+    implementation "androidx.activity:activity-ktx:$rootProject.ext.activity_ktx"
+
 }

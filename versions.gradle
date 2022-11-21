@@ -4,13 +4,24 @@ ext {
     minSdk = 27
     targetSdk = 32
     compileSdk = 32
-    versionName = "Development-0.0.45"
+    versionName = "0.0.45"
     jvmTarget = '11'
     core_ktx = "1.7.0"
     appcompat = "1.5.1"
     material = "1.7.0"
     constraintlayout = "2.1.4"
     testImplementation_junit = "4.13.2"
-    androidTestImplementation_junit = "1.1.3"
-    androidTestImplementation_espresso_core = "3.4.0"
+    androidTestImplementation_junit = "1.1.4"
+    androidTestImplementation_espresso_core = "3.5.0"
+
+    //hilt
+    implementation_hilt = "2.44"
+    kapt_hilt = "2.44"
+
+    //room
+    room_version = "2.4.3"
+
+    //viewmodel delegate
+    fragment_ktx = "1.5.4"
+    activity_ktx = "1.6.1"
 }
