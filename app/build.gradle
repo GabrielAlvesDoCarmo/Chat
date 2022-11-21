@@ -38,6 +38,14 @@ android {
         versionCode Integer.valueOf("$rootProject.ext.versionCode")
         versionName "$rootProject.ext.versionName"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments += [
+                        "room.schemaLocation":"$projectDir/schemas".toString(),
+                        "room.incremental":"true",
+                        "room.expandProjection":"true"]
+            }
+        }
     }
 
     buildTypes {
