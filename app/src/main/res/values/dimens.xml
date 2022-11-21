@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--  Splash Activity  -->
+    <dimen name="SESSENTA_SP">60sp</dimen>
+    <dimen name="DEZOITO_SP">18sp</dimen>
+</resources>
