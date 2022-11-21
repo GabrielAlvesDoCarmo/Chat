@@ -42,27 +42,39 @@ pipeline {
 
         stage('Build APK') {
             parallel{
-                steps {
-                    sh "./gradlew clean assembleDebug"
+                stage('Debug Apk'){
+                    steps {
+                        sh "./gradlew clean assembleDebug"
+                    }
                 }
-                steps {
-                    sh "./gradlew clean assembleRelease"
+                stage('Release Apk'){
+                    steps {
+                        sh "./gradlew clean assembleRelease"
+                    }
                 }
             }
         }
         stage('TEST') {
             parallel{
-                steps {
-                    sh "./gradlew lint"
+                stage('Lint'){
+                    steps {
+                        sh "./gradlew lint"
+                    }
                 }
-                steps {
-                    sh "./gradlew lintKotlin"
+                stage('Ktlint'){
+                    steps {
+                        sh "./gradlew lintKotlin"
+                    }
                 }
-                steps {
-                    sh "./gradlew detekt"
+                stage('Detekt'){
+                    steps {
+                        sh "./gradlew detekt"
+                    }
                 }
-                steps {
-                    sh "./gradlew test"
+                stage('Instrumental and Unit Test'){
+                    steps {
+                        sh "./gradlew test"
+                    }
                 }
             }
         }
