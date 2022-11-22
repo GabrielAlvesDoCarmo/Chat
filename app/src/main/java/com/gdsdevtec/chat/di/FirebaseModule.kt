@@ -1,5 +1,7 @@
 package com.gdsdevtec.chat.di
 
+import com.gdsdevtec.chat.data.firebase.analytics.AnalyticsServiceImpl
+import com.gdsdevtec.chat.data.firebase.authentication.EmailPasswordImp
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.auth.FirebaseAuth
@@ -23,11 +25,13 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class FirebaseModule {
+    private val auth by lazy { Firebase.auth }
+    private val analytics by lazy { Firebase.analytics }
 
     @Provides
     @Singleton
     fun authentication(): FirebaseAuth {
-        return Firebase.auth
+        return auth
     }
 
     @Provides
@@ -50,8 +54,8 @@ class FirebaseModule {
 
     @Provides
     @Singleton
-    suspend fun analytics(): FirebaseAnalytics {
-        return Firebase.analytics
+    fun analytics(): FirebaseAnalytics {
+        return analytics
     }
 
     @Provides
@@ -63,6 +67,18 @@ class FirebaseModule {
         }
         remoteConfig.setConfigSettingsAsync(configSettings)
         return remoteConfig
+    }
+
+    @Provides
+    @Singleton
+    fun analyticsService(): AnalyticsServiceImpl {
+        return AnalyticsServiceImpl(analytics)
+    }
+
+    @Provides
+    @Singleton
+    fun emailAnPassword(): EmailPasswordImp {
+        return EmailPasswordImp(auth)
     }
 
 }

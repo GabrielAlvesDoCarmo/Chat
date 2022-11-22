@@ -136,3 +136,6 @@ dependencies {
     implementation "com.google.firebase:firebase-firestore-ktx:$rootProject.ext.firestore_ktx"
     implementation "com.google.firebase:firebase-storage-ktx:$rootProject.ext.storage_ktx"
 }
+kapt {
+    correctErrorTypes = true
+}
