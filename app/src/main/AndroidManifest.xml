@@ -16,6 +16,14 @@
         android:theme="@style/Theme.Chat"
         tools:targetApi="31">
         <activity
+            android:name=".ui.activity.intro.SlideIntroActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Intro">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".ui.activity.core.SetupAppActivity"
             android:exported="false">
             <meta-data

@@ -135,6 +135,8 @@ dependencies {
     implementation "com.google.firebase:firebase-database-ktx:$rootProject.ext.realtime_ktx"
     implementation "com.google.firebase:firebase-firestore-ktx:$rootProject.ext.firestore_ktx"
     implementation "com.google.firebase:firebase-storage-ktx:$rootProject.ext.storage_ktx"
+    //material intro
+    implementation "com.heinrichreimersoftware:material-intro:$rootProject.ext.material_intro"
 }
 kapt {
     correctErrorTypes = true

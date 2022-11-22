@@ -27,6 +27,9 @@ import javax.inject.Singleton
 class FirebaseModule {
     private val auth by lazy { Firebase.auth }
     private val analytics by lazy { Firebase.analytics }
+    private val realtime by lazy { Firebase.database.reference }
+    private val fireStore by lazy { Firebase.firestore }
+    private val storage by lazy { Firebase.storage }
 
     @Provides
     @Singleton
@@ -37,19 +40,19 @@ class FirebaseModule {
     @Provides
     @Singleton
     fun realtime(): DatabaseReference {
-        return Firebase.database.reference
+        return realtime
     }
 
     @Provides
     @Singleton
     fun fireStore(): FirebaseFirestore {
-        return Firebase.firestore
+        return fireStore
     }
 
     @Provides
     @Singleton
     fun storage(): FirebaseStorage {
-        return Firebase.storage
+        return storage
     }
 
     @Provides
