@@ -2,12 +2,10 @@ package com.gdsdevtec.chat.data.firebase.analytics
 
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.logEvent
-import dagger.hilt.EntryPoint
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-@EntryPoint
 class AnalyticsServiceImpl @Inject constructor(
     private val analytics: FirebaseAnalytics
 ) : AnalyticsService {
