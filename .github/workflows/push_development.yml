@@ -31,180 +31,180 @@ jobs:
           name: debug.apk
           path: app/build/outputs/apk/debug/app-debug.apk
 
-  build-release-apk-development:
-    runs-on: ubuntu-latest
-    environment: BUILD-DEVELOPMENT
-    container:
-      image: androidsdk/android-30
-    steps:
-      - uses: actions/checkout@v3
-      - name: Setup Environment
-        env:
-          APP_ID: ${{secrets.APP_CHAT_ID_FIREBASE}}
-          KEYSTORE_APP: ${{secrets.KEYSTORE}}
-          FIREBASE_APP: ${{secrets.FIREBASE}}
-          SERVICE_ACCOUNT_APP: ${{secrets.SERVICE_ACCOUNT}}
-        run: |
-          export APP_CHAT_ID_FIREBASE=$APP_ID
-          echo $KEYSTORE_APP | base64 -d > app/chat_keystore.jks
-          echo $FIREBASE_APP | base64 -d > app/firebase_service_distribuition.json
-          echo $SERVICE_ACCOUNT_APP | base64 -d > app/service_account_play_console.json
-      - name: Build Release Apk
-        run: ./gradlew assembleRelease
-
-      - name: Upload Apk Release
-        uses: actions/upload-artifact@v3
-        with:
-          name: release.apk
-          path: app/build/outputs/apk/release/app-release.apk
-
-  Lint:
-    needs:
-      - build-release-apk-development
-      - build-debug-apk-development
-    runs-on: ubuntu-latest
-    environment: TEST_DEVELOPMENT
-    container:
-      image: androidsdk/android-30
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Lint Test
-        run: ./gradlew lint
-
-      - name: Upload result lint Test
-        uses: actions/upload-artifact@v3
-        with:
-          name: index.html
-          path: app/build/reports/lint-results-debug.html
-
-  Ktlint:
-    needs:
-      - build-release-apk-development
-      - build-debug-apk-development
-    runs-on: ubuntu-latest
-    environment: TEST_DEVELOPMENT
-    container:
-      image: androidsdk/android-30
-    steps:
-      - uses: actions/checkout@v3
-      - name: Ktlint Test
-        run: ./gradlew lintKotlin
-
-      - name: Upload result ktlint test
-        uses: actions/upload-artifact@v3
-        with:
-          name: Ktlint
-          path: app/build/reports/ktlint/**
-
-  Detekt:
-    needs:
-      - build-release-apk-development
-      - build-debug-apk-development
-    runs-on: ubuntu-latest
-    environment: TEST_DEVELOPMENT
-    container:
-      image: androidsdk/android-30
-    steps:
-      - uses: actions/checkout@v3
-      - name: Detekt Test
-        run: ./gradlew detekt
-
-      - name: Upload result detekt test
-        uses: actions/upload-artifact@v3
-        with:
-          name: ResultDetekt
-          path: app/build/reports/detekt/**
-
-  Sonar:
-    needs:
-      - build-release-apk-development
-      - build-debug-apk-development
-    runs-on: ubuntu-latest
-    environment: TEST_DEVELOPMENT
-    container:
-      image: androidsdk/android-30
-    steps:
-      - uses: actions/checkout@v3
-      - name: Setup Environment
-        env:
-          APP_ID: ${{secrets.APP_CHAT_ID_FIREBASE}}
-          KEYSTORE_APP: ${{secrets.KEYSTORE}}
-        run: |
-          export APP_CHAT_ID_FIREBASE=$APP_ID
-          echo $KEYSTORE_APP | base64 -d > app/chat_keystore.jks
-
-      - name: Cache SonarCloud packages
-        uses: actions/cache@v2.1.5
-        with:
-          path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
-
-      - name: Sonarqube Test
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: ./gradlew build sonar
-
-      - name: Upload result Sonarqube test
-        uses: actions/upload-artifact@v3
-        with:
-          name: sonarqube
-          path: app/build/sonar/**
-
-  Intrumental-and-Unit-Test:
-    needs:
-      - build-release-apk-development
-      - build-debug-apk-development
-    runs-on: ubuntu-latest
-    environment: TEST_DEVELOPMENT
-    container:
-      image: androidsdk/android-30
-    steps:
-      - uses: actions/checkout@v3
-      - name: Setup Environment
-        env:
-          APP_ID: ${{secrets.APP_CHAT_ID_FIREBASE}}
-          KEYSTORE_APP: ${{secrets.KEYSTORE}}
-        run: |
-          export APP_CHAT_ID_FIREBASE=$APP_ID
-          echo $KEYSTORE_APP | base64 -d > app/chat_keystore.jks
-
-      - name: Unit Test
-        run: ./gradlew test
-
-      - name: Upload result Instrumental and Unit test
-        uses: actions/upload-artifact@v3
-        with:
-          name: index.html
-          path: app/build/reports/tests/testDebugUnitTest/index.html
-  App-Distribution-Firebase:
-    needs:
-      - Lint
-      - Ktlint
-      - Detekt
-      - Sonar
-      - Intrumental-and-Unit-Test
-    runs-on: ubuntu-latest
-    environment: DEPLOY-DEVELOPMENT
-    container:
-      image: androidsdk/android-30
-    steps:
-      - uses: actions/checkout@v3
-      - name: Setup Environment
-        env:
-          APP_ID: ${{secrets.APP_CHAT_ID_FIREBASE}}
-          KEYSTORE_APP: ${{secrets.KEYSTORE}}
-          FIREBASE_APP: ${{secrets.FIREBASE}}
-          SERVICE_ACCOUNT_APP: ${{secrets.SERVICE_ACCOUNT}}
-        run: |
-          export APP_CHAT_ID_FIREBASE=$APP_ID
-          echo $KEYSTORE_APP | base64 -d > app/chat_keystore.jks
-          echo $FIREBASE_APP | base64 -d > app/firebase_service_distribuition.json
-          echo $SERVICE_ACCOUNT_APP | base64 -d > app/service_account_play_console.json
-          export SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT=app/service_account_play_console.json
-
-      - name: Deploy firebase
-        run: ./gradlew assembleRelease appDistributionUploadRelease
+#  build-release-apk-development:
+#    runs-on: ubuntu-latest
+#    environment: BUILD-DEVELOPMENT
+#    container:
+#      image: androidsdk/android-30
+#    steps:
+#      - uses: actions/checkout@v3
+#      - name: Setup Environment
+#        env:
+#          APP_ID: ${{secrets.APP_CHAT_ID_FIREBASE}}
+#          KEYSTORE_APP: ${{secrets.KEYSTORE}}
+#          FIREBASE_APP: ${{secrets.FIREBASE}}
+#          SERVICE_ACCOUNT_APP: ${{secrets.SERVICE_ACCOUNT}}
+#        run: |
+#          export APP_CHAT_ID_FIREBASE=$APP_ID
+#          echo $KEYSTORE_APP | base64 -d > app/chat_keystore.jks
+#          echo $FIREBASE_APP | base64 -d > app/firebase_service_distribuition.json
+#          echo $SERVICE_ACCOUNT_APP | base64 -d > app/service_account_play_console.json
+#      - name: Build Release Apk
+#        run: ./gradlew assembleRelease
+#
+#      - name: Upload Apk Release
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: release.apk
+#          path: app/build/outputs/apk/release/app-release.apk
+#
+#  Lint:
+#    needs:
+#      - build-release-apk-development
+#      - build-debug-apk-development
+#    runs-on: ubuntu-latest
+#    environment: TEST_DEVELOPMENT
+#    container:
+#      image: androidsdk/android-30
+#
+#    steps:
+#      - uses: actions/checkout@v3
+#
+#      - name: Lint Test
+#        run: ./gradlew lint
+#
+#      - name: Upload result lint Test
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: index.html
+#          path: app/build/reports/lint-results-debug.html
+#
+#  Ktlint:
+#    needs:
+#      - build-release-apk-development
+#      - build-debug-apk-development
+#    runs-on: ubuntu-latest
+#    environment: TEST_DEVELOPMENT
+#    container:
+#      image: androidsdk/android-30
+#    steps:
+#      - uses: actions/checkout@v3
+#      - name: Ktlint Test
+#        run: ./gradlew lintKotlin
+#
+#      - name: Upload result ktlint test
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: Ktlint
+#          path: app/build/reports/ktlint/**
+#
+#  Detekt:
+#    needs:
+#      - build-release-apk-development
+#      - build-debug-apk-development
+#    runs-on: ubuntu-latest
+#    environment: TEST_DEVELOPMENT
+#    container:
+#      image: androidsdk/android-30
+#    steps:
+#      - uses: actions/checkout@v3
+#      - name: Detekt Test
+#        run: ./gradlew detekt
+#
+#      - name: Upload result detekt test
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: ResultDetekt
+#          path: app/build/reports/detekt/**
+#
+#  Sonar:
+#    needs:
+#      - build-release-apk-development
+#      - build-debug-apk-development
+#    runs-on: ubuntu-latest
+#    environment: TEST_DEVELOPMENT
+#    container:
+#      image: androidsdk/android-30
+#    steps:
+#      - uses: actions/checkout@v3
+#      - name: Setup Environment
+#        env:
+#          APP_ID: ${{secrets.APP_CHAT_ID_FIREBASE}}
+#          KEYSTORE_APP: ${{secrets.KEYSTORE}}
+#        run: |
+#          export APP_CHAT_ID_FIREBASE=$APP_ID
+#          echo $KEYSTORE_APP | base64 -d > app/chat_keystore.jks
+#
+#      - name: Cache SonarCloud packages
+#        uses: actions/cache@v2.1.5
+#        with:
+#          path: ~/.sonar/cache
+#          key: ${{ runner.os }}-sonar
+#          restore-keys: ${{ runner.os }}-sonar
+#
+#      - name: Sonarqube Test
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+#        run: ./gradlew build sonar
+#
+#      - name: Upload result Sonarqube test
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: sonarqube
+#          path: app/build/sonar/**
+#
+#  Intrumental-and-Unit-Test:
+#    needs:
+#      - build-release-apk-development
+#      - build-debug-apk-development
+#    runs-on: ubuntu-latest
+#    environment: TEST_DEVELOPMENT
+#    container:
+#      image: androidsdk/android-30
+#    steps:
+#      - uses: actions/checkout@v3
+#      - name: Setup Environment
+#        env:
+#          APP_ID: ${{secrets.APP_CHAT_ID_FIREBASE}}
+#          KEYSTORE_APP: ${{secrets.KEYSTORE}}
+#        run: |
+#          export APP_CHAT_ID_FIREBASE=$APP_ID
+#          echo $KEYSTORE_APP | base64 -d > app/chat_keystore.jks
+#
+#      - name: Unit Test
+#        run: ./gradlew test
+#
+#      - name: Upload result Instrumental and Unit test
+#        uses: actions/upload-artifact@v3
+#        with:
+#          name: index.html
+#          path: app/build/reports/tests/testDebugUnitTest/index.html
+#  App-Distribution-Firebase:
+#    needs:
+#      - Lint
+#      - Ktlint
+#      - Detekt
+#      - Sonar
+#      - Intrumental-and-Unit-Test
+#    runs-on: ubuntu-latest
+#    environment: DEPLOY-DEVELOPMENT
+#    container:
+#      image: androidsdk/android-30
+#    steps:
+#      - uses: actions/checkout@v3
+#      - name: Setup Environment
+#        env:
+#          APP_ID: ${{secrets.APP_CHAT_ID_FIREBASE}}
+#          KEYSTORE_APP: ${{secrets.KEYSTORE}}
+#          FIREBASE_APP: ${{secrets.FIREBASE}}
+#          SERVICE_ACCOUNT_APP: ${{secrets.SERVICE_ACCOUNT}}
+#        run: |
+#          export APP_CHAT_ID_FIREBASE=$APP_ID
+#          echo $KEYSTORE_APP | base64 -d > app/chat_keystore.jks
+#          echo $FIREBASE_APP | base64 -d > app/firebase_service_distribuition.json
+#          echo $SERVICE_ACCOUNT_APP | base64 -d > app/service_account_play_console.json
+#          export SERVICE_ACCOUNT_PLAY_CONSOLE_APP_CHAT=app/service_account_play_console.json
+#
+#      - name: Deploy firebase
+#        run: ./gradlew assembleRelease appDistributionUploadRelease
