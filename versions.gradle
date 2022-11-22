@@ -24,4 +24,13 @@ ext {
     //viewmodel delegate
     fragment_ktx = "1.5.4"
     activity_ktx = "1.6.1"
+
+    //firebase
+    firebase_bom = "31.1.0"
+    analytics_ktx = "21.2.0"
+    remote_config_ktx = "21.2.0"
+    auth_ktx = "21.1.0"
+    realtime_ktx = "20.1.0"
+    firestore_ktx = "24.4.1"
+    storage_ktx = "20.1.0"
 }

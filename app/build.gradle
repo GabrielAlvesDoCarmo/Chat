@@ -127,5 +127,12 @@ dependencies {
     //viewmodel delegate
     implementation "androidx.fragment:fragment-ktx:$rootProject.ext.fragment_ktx"
     implementation "androidx.activity:activity-ktx:$rootProject.ext.activity_ktx"
-
+    //firebase
+    implementation platform("com.google.firebase:firebase-bom:$rootProject.ext.firebase_bom")
+    implementation "com.google.firebase:firebase-analytics-ktx:$rootProject.ext.analytics_ktx"
+    implementation "com.google.firebase:firebase-config-ktx:$rootProject.ext.remote_config_ktx"
+    implementation "com.google.firebase:firebase-auth-ktx:$rootProject.ext.auth_ktx"
+    implementation "com.google.firebase:firebase-database-ktx:$rootProject.ext.realtime_ktx"
+    implementation "com.google.firebase:firebase-firestore-ktx:$rootProject.ext.firestore_ktx"
+    implementation "com.google.firebase:firebase-storage-ktx:$rootProject.ext.storage_ktx"
 }
