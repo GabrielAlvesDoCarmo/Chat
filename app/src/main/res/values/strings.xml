@@ -2,4 +2,15 @@
     <string name="app_name">Chat</string>
     <!--  SplashActivity  -->
     <string name="chat_logo_splash">CHAT</string>
+    <string name="bem_vindo_n_ao_app_chat_n_o_aplicativo_de_comunica_o_personalizavel">Bem vindo! \n ao app chat \n o aplicativo de comunicação personalizavel</string>
+    <string name="no_chat_n_e_possivel_criar_chats_para_amigos_n_empresas_e_n_familia_n">No chat \n e possivel criar chats para amigos \n empresas e \n familia \n</string>
+    <string name="crie_uma_experiencia_n_personalizavel_n_n_unica_na_sua_comunica_o"><![CDATA[Crie uma experiencia\n personalizavel \n & \n unica na sua comunicação]]></string>
+    <string name="chat_id">CHAT ID</string>
+    <string name="digite_seu_chatid">Digite seu CHATID</string>
+    <string name="digite_seu_chat_id">Digite seu CHAT_ID</string>
+    <string name="nao_possui_um_chat_id_crie_agora_mesmo">Nao possui um chat id? crie agora mesmo</string>
+    <string name="pessoal">Pessoal</string>
+    <string name="grupo">Grupo</string>
+    <string name="negocio">Negocio</string>
+    <string name="empresa">Empresa</string>
 </resources>

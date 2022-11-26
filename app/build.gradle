@@ -137,6 +137,7 @@ dependencies {
     implementation "com.google.firebase:firebase-storage-ktx:$rootProject.ext.storage_ktx"
     //material intro
     implementation "com.heinrichreimersoftware:material-intro:$rootProject.ext.material_intro"
+//    implementation "com.google.android.gms:play-services-ads:$rootProject.ext.admob"
 }
 kapt {
     correctErrorTypes = true
